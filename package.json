@@ -1,0 +1,49 @@
+{
+  "name": "capppy-grand-adventure",
+  "version": "1.0.0",
+  "description": "A homeless Shibafrom Sheffield finds himself on BLeecker street looking for a hot, juicy steak",
+  "main": "postcss.config.js",
+  "dependencies": {
+    "autoprefixer": "^10.0.1",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^4.3.0",
+    "fibers": "^5.0.0",
+    "file-loader": "^6.1.1",
+    "mini-css-extract-plugin": "^1.0.0",
+    "node-sass": "^4.14.1",
+    "postcss-loader": "^4.0.4",
+    "sass-loader": "^10.0.3",
+    "sass": "^1.27.0",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "webpack-cli": "^4.0.0",
+    "webpack-merge": "^5.2.0",
+    "webpack-dev-server": "^3.11.0",
+    "webpack": "^5.0.0"
+  },
+  "devDependencies": {},
+ "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "maintained node versions",
+    "not dead"
+],
+"scripts": {
+    "start": "webpack-dev-server --config webpack.dev.js",
+    "webpack:watch": "webpack --watch --config webpack.dev.js",
+    "webpack:build": "webpack --config webpack.prod.js  --optimize-minimize"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnrobertmcc/Cappy-s-Grand-Adventure.git"
+  },
+  "keywords": [
+    "Shiba"
+  ],
+  "author": "johnrobertmcc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnrobertmcc/Cappy-s-Grand-Adventure/issues"
+  },
+  "homepage": "https://github.com/johnrobertmcc/Cappy-s-Grand-Adventure#readme"
+}
