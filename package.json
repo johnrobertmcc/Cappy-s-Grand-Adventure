@@ -1,7 +1,7 @@
 {
   "name": "capppy-grand-adventure",
   "version": "1.0.0",
-  "description": "A homeless Shibafrom Sheffield finds himself on BLeecker street looking for a hot, juicy steak",
+  "description": "A homeless Shiba from Sheffield finds himself on Bleecker Street looking for a hot, juicy steak",
   "main": "postcss.config.js",
   "dependencies": {
     "autoprefixer": "^10.0.1",
@@ -22,17 +22,17 @@
     "webpack": "^5.0.0"
   },
   "devDependencies": {},
- "browserslist": [
+  "browserslist": [
     "last 1 version",
     "> 1%",
     "maintained node versions",
     "not dead"
-],
-"scripts": {
+  ],
+  "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
     "webpack:watch": "webpack --watch --config webpack.dev.js",
     "webpack:build": "webpack --config webpack.prod.js  --optimize-minimize"
-},
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/johnrobertmcc/Cappy-s-Grand-Adventure.git"
