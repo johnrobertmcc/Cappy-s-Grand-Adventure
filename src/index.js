@@ -1,9 +1,21 @@
-
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-let limbo = document.getElementById('sound');
+
+let limbo = document.getElementById('sound'); //ily Limbo
+
 canvas.height = 700;
 canvas.width = 1000;
+
+const first = new Image();
+first.src = 'src/styles/images/city.png'
+
+const second = new Image();
+second.src = 'src/styles/images/two.jpg'
+
+const backgrounds = [
+    first,
+    second
+]
 
 const keys = []
 
@@ -23,10 +35,6 @@ const player = {
 
 const captain = new Image();
 captain.src = 'src/styles/images/Captain-beta.png'
-
-const background = new Image();
-background.src = 'src/styles/images/city.png'
-
 
 function drawCaptain(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
@@ -66,10 +74,10 @@ function moveThisLad(){
         player.x -= player.speed
 
     }
-    if(keys[37] && player.x <=10) {
-        player.moving = true;
-        player.position += 5;
-    }
+    // if(keys[37] && player.position <=0) {
+    //     player.moving = true;
+    //     // player.position += 5;
+    // }
     if(keys[38] && player.y === 575){
         player.y -= 50
         player.jumping = true;
@@ -78,9 +86,9 @@ function moveThisLad(){
     if(player.y !== 575){
         player.moving = false;
         player.jumping = true;
-        player.frameX = 0;
-        player.frameY = 8;
-        player.y += 1
+        // player.frameX = 0;
+        // player.frameY = 8;
+        player.y += 5
     }
     if(keys[40] && player.y === 575){
 
@@ -109,9 +117,30 @@ function makeHimWalk(){
         player.frameX ++;
     }
     else {
-        player.frameX = 0 && player.frameY === 0
+        player.frameX = 0 && player.frameY === 0;
     };
 }
+
+
+let bgn_idx = 0;
+let bgn = backgrounds[bgn_idx];
+
+function changeBackground(){
+    let temp = (bgn.width * -1)
+    let next_state = (temp + 1000)
+    if(player.position <= next_state){
+        bgn_idx++
+        bgn = backgrounds[bgn_idx]
+        player.position = -10;
+    }
+    // else if(player.position > 0){
+    //     debugger
+    //     bgn_idx = bgn_idx - 1;
+    //     bgn = backgrounds[bgn_idx];
+    //     player.position = bgn.width - 1000;
+    // }
+}
+
 
 let fps, fpsInterval, startTime, now, then, elapsed; //global variables
 
@@ -140,7 +169,7 @@ function animate() {
 
         ctx.clearRect(0,0, canvas.width, canvas.height);
 
-        ctx.drawImage(background, player.position, 0, background.width, canvas.height);
+        ctx.drawImage(bgn, player.position, 0, bgn.width, canvas.height);
 
         drawCaptain(
             captain, 
@@ -157,6 +186,7 @@ function animate() {
         moveThisLad();
         makeHimWalk();
         applyGravity();
+        changeBackground();
     
 
     }

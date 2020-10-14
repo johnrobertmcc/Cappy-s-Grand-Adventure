@@ -49,3 +49,12 @@ body{
 .instructions{
 
 }
+
+#footer{
+    position: relative;
+    text-align: center;
+    bottom: 0;
+    width: 90vw;
+    height: 2.5rem;
+    border: 1px solid black;
+}
