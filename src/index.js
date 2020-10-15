@@ -74,10 +74,10 @@ function moveThisLad(){
         player.x -= player.speed
 
     }
-    // if(keys[37] && player.position <=0) {
-    //     player.moving = true;
-    //     // player.position += 5;
-    // }
+    if(keys[37] && player.x <=0) {
+        player.moving = true;
+        // player.position += 5;
+    }
     if(keys[38] && player.y === 575){
         player.y -= 50
         player.jumping = true;
