@@ -169,7 +169,7 @@ function animate() {
 
         ctx.clearRect(0,0, canvas.width, canvas.height);
 
-        ctx.drawImage(bgn, player.position, 0, bgn.width, canvas.height);
+        ctx.drawImage(first, player.position, 0, first.width, canvas.height);
 
         drawCaptain(
             captain, 

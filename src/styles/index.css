@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    font-family: monospace;
 }
 
 .overarch{
@@ -11,14 +12,56 @@
     display: flex;
 }
 
+.created{
+    font-size: smaller;
+}
+.contact{
+    display: flex;
+    justify-content: space-around;
+    font-size: 25px;
+    margin-top: auto;
+}
+
 .right-side{
     border: 1px solid black;
     width: 15%;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+/* 
+.left-side> h3 {
+  padding: 15px;
+} */
+
+.right-side> h3 {
+    margin-top: 100px;
+    padding: 15px;
+}
+
+.story{
+    margin-top: 90px;
+    padding: 8px;
+}
+
+.credit{
+    justify-content: space-around;
+    display: flex;
+    font-size: 12px;
+}
+.donate:hover{
+    text-decoration: none;
+    color: rgb(191, 42, 111);
 }
 
 .left-side{
     border: 1px solid black;
     width: 15%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .background{
     display: flex;
@@ -58,3 +101,31 @@ body{
     height: 2.5rem;
     border: 1px solid black;
 }
+
+a{
+    text-decoration: none;
+}
+a:visited { text-decoration: none; color:black; }
+a:focus { text-decoration: none; color:black; }
+a:active { text-decoration: none; color:black }
+
+.linkedin:hover{
+    text-decoration: none;
+    color: rgb(14,114,163);
+}
+.github:hover{
+    text-decoration: none;
+    color: rgb(116, 12, 12);
+    /* -webkit-filter: invert(100%); */
+    /* filter: invert(100%); */
+}
+.spotify:hover{
+    text-decoration: none;
+    color: rgb(29,208,93)
+}
+
+.instagram:hover{
+    text-decoration: none;
+    color: rgb(222, 96, 233)
+}
+
