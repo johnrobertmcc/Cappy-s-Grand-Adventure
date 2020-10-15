@@ -1,0 +1,13 @@
+/* .canvases{
+    position: absolute;
+    top: 0;
+    left: 0;
+} */
+ 
+.canvas-container{
+    position: relative;
+} 
+
+.canvas{
+    background: pink;
+}
