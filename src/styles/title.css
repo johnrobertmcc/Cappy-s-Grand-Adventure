@@ -8,11 +8,11 @@ span{
     opacity: 0;
     transition: all 4s ease-in;
     /* z-index: 2; */
-    color: rgb(208, 168, 39);
+    /* color: rgb(231, 188, 237); */
 }
 
 span.fade{
     opacity: .4;
-    transition: all 8s ease-in-out;
-    color: black;
+    transition: all 8s ease;
+    color: white;
 }

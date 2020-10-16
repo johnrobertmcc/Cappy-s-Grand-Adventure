@@ -30,11 +30,12 @@ const player = {
     speed: 5,
     moving: false,
     jumping: false,
-    position: 0,
+    position: -20,
+    running: false
 }
 
 const captain = new Image();
-captain.src = 'src/styles/images/Captain-beta.png'
+captain.src = 'src/styles/images/captainV2.png'
 
 function drawCaptain(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
@@ -52,9 +53,12 @@ window.addEventListener('keydown', function(e){
 window.addEventListener('keyup', function(e){
     delete keys[e.keyCode];
     player.moving = false;
+    player.running = false;
 });
 
 function moveThisLad(){
+
+    //move right
     if(keys[39] && player.x < 550) {
         //right facing x 0-3 y 0
         player.position -= 5
@@ -66,6 +70,15 @@ function moveThisLad(){
         player.moving = true;
         player.position -= 5;
     }
+    if(player.y === 575 && keys[16] && keys[39]){
+        player.position = player.position * 1.25;
+        player.frameY = 2;
+        // debugger
+        player.running = true;
+    }
+
+
+    //move left
     if(keys[37] && player.x > 0) {
         //left facing x0-3 y 1
         player.position += 5
@@ -74,11 +87,21 @@ function moveThisLad(){
         player.x -= player.speed
 
     }
-    if(keys[37] && player.x <=0) {
+    if(keys[37] && player.x >= -10) {
         player.moving = true;
         // player.position += 5;
     }
+    if(player.y === 575 && keys[16] && keys[37]){
+        player.position = player.position * 1.25;
+        // debugger
+        player.frameY = 3;
+        player.running = true;
+    }
+
+    //jumping
     if(keys[38] && player.y === 575){
+        player.frameX = 0;
+        player.frameY = 4;
         player.y -= 50
         player.jumping = true;
 
@@ -86,39 +109,69 @@ function moveThisLad(){
     if(player.y !== 575){
         player.moving = false;
         player.jumping = true;
-        // player.frameX = 0;
-        // player.frameY = 8;
         player.y += 5
     }
-    if(keys[40] && player.y === 575){
 
-        player.frameY = 7;
-        player.frameX = 0;
-        player.moving = false;
-        
+    ////for sitting
+    // if(keys[40] && player.y === 575){
+
+    //     player.frameY = 7;
+    //     player.frameX = 0;
+    //     player.moving = false;   
+    // }
+
+}
+
+function toggleRun(){
+    if(player.moving === true){
+        player.running = false;
+    }else if(player.running === true){
+        player.moving = false
     }
 }
 
 function applyGravity(){
     while(player.y > 602){
-        player.y += 3;
+        player.y += 5;
         player.frameX = 0;
-        player.frameY = 8;
+        player.frameY = 0;
+    }
+    // if(player.y === 601){
+    //     player.frameX = 0;
+    //     player.frameY = 0;
+    // }
+}
+
+function resetOnStand(){
+    if(!player.moving || !player.jumping || !player.running){
+        player.frameX = 0;
+        player.frameY = 0;
     }
 }
 
 function makeHimWalk(){
     if( player.frameX < 3 && player.frameY === 0 && player.moving){
         player.frameX ++;
-
     } else if( player.frameX < 3 && player.frameY === 1 && player.moving){
         player.frameX ++;
-    } else if(player.jumping === true && player.y > 600) {
+    } else if(player.frameX < 3 && player.frameY === 2 ){
         player.frameX ++;
-    }
+    }else if(player.frameX < 3 && player.frameY === 3 ){
+        player.frameX ++;
+    } 
     else {
         player.frameX = 0 && player.frameY === 0;
     };
+}
+
+function makeHimJump() {
+    if(player.frameX < 3 && player.frameY === 4){
+        player.frameX ++
+    }else if(player.jumping === true && player.y > 600) {
+        player.frameX ++;
+    }else if(player.moving === false && player.y <= 601){
+        player.jumping === false
+    }
 }
 
 
@@ -140,7 +193,6 @@ function changeBackground(){
     //     player.position = bgn.width - 1000;
     // }
 }
-
 
 let fps, fpsInterval, startTime, now, then, elapsed; //global variables
 
@@ -169,7 +221,7 @@ function animate() {
 
         ctx.clearRect(0,0, canvas.width, canvas.height);
 
-        ctx.drawImage(first, player.position, 0, first.width, canvas.height);
+        ctx.drawImage(first, (player.position % first.width - 500), 0, first.width, canvas.height);
 
         drawCaptain(
             captain, 
@@ -186,7 +238,11 @@ function animate() {
         moveThisLad();
         makeHimWalk();
         applyGravity();
-        changeBackground();
+        // changeBackground();
+        // makeHimRun();
+        makeHimJump();
+        // resetOnStand();
+        toggleRun();
     
 
     }
