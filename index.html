@@ -5,16 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./src/styles//index.css" />
         <link rel="stylesheet" href="./src/styles//title.css" />
+        <link rel="stylesheet" href="./src/styles//loading.css" />
         <title>Cappy's Grand Adventure</title>
+                <script src ='./src/scripts/loading.js'></script>
         <script src="https://kit.fontawesome.com/92fff4274c.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
-        <audio id='sound' src='/src/sound/l i m b o - muddy paws.mp3'></audio>
-        <div class='overarch'>
+        <div class='show' onclick="this.className='hide'">
+            <audio id='sound' src='/src/sound/l i m b o - muddy paws.mp3'></audio>
+            <div class='overarch'>
             
-            <div class='left-side'>
-
+                <div class='left-side'>
+                    
                     <div class='story'>
                         Cold, alone, and hungry, Captain the homeless Shiba is really craving a steak dinner.
                         <br><br>
@@ -24,79 +27,80 @@
                         <br><br>
                         Don't get caught by the employees!
                     </div>
-            
-
-                <div class='contact'>
-
-                    <a href='https://www.linkedin.com/in/jrmcc/' class='linkedin'>
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-
-                    <a href='https://github.com/johnrobertmcc?tab=repositories' class='github'>
-                        <i class="fab fa-github"></i>
-                    </a>
+                    
+                    
+                    <div class='contact'>
+                        
+                        <a href='https://www.linkedin.com/in/jrmcc/' class='linkedin'>
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        
+                        <a href='https://github.com/johnrobertmcc?tab=repositories' class='github'>
+                            <i class="fab fa-github"></i>
+                        </a>
+                        
+                        
+                    </div>
+                    <h3>
+                        <p class='created'>Created by</p>
+                        John Robert McCann
+                    </h3>
+                    
+                    
+                    
+                </div>
                 
-                    
+                <div class='background'>
+                    <header class='title'>
+                        <h1 class="fancy">
+                            Cappy's Grand Adventure
+                        </h1>
+                        <script src='./src//scripts/main.js'></script>
+                    </header>
+                    <div class='canvas-container'>
+                        <!-- <canvas class='canvases' id='background-canvas' width='1000' height='600'style="border:1px solid black"></canvas> -->
+                        <canvas class='canvases' id="canvas" width='1000' height='600' style="border:1px solid black"></canvas>
+                    </div>
+                    <script src="./src/index.js"></script>
                 </div>
-                <h3>
-                    <p class='created'>Created by</p>
-                    John Robert McCann
-                </h3>
-
-        
-            
-            </div>
-
-            <div class='background'>
-                <header class='title'>
-                    <h1 class="fancy">
-                        Cappy's Grand Adventure
-                    </h1>
-                    <script src='./src//scripts/main.js'></script>
-                </header>
-                <div class='canvas-container'>
-                    <!-- <canvas class='canvases' id='background-canvas' width='1000' height='600'style="border:1px solid black"></canvas> -->
-                    <canvas class='canvases' id="canvas" width='1000' height='600' style="border:1px solid black"></canvas>
-                </div>
-                <script src="./src/index.js"></script>
-            </div>
-
-            <div class='right-side'>
-                <h3 class='instructions'>
-                    Use left and right arrow keys to move 
-                    <br><br> 
-                    Use the up arrow key to jump 
-                    <br><br>
-                    Use the down arrow key to sit 
-                    <br><br>
-                    Hold down the shift key while walking to run
-                    <br><br>
-                    and remember: you're a very good boy
-                </h3>
-
-                <div class='credit'>
+                
+                <div class='right-side'>
+                    <h3 class='instructions'>
+                        Use left and right arrow keys to move 
+                        <br><br> 
+                        Use the up arrow key to jump 
+                        <br><br>
+                        Use the down arrow key to sit 
+                        <br><br>
+                        Press the shift key while walking to run
+                        <br><br>
+                        and remember: you're a very good boy
+                    </h3>
                     
-                    <a href='https://open.spotify.com/artist/13VunSzrVSmJBpUWxUajJF' class='spotify'>
-                        <i class="fab fa-spotify"></i> <br>music by Limbo 
-                    </a>
+                    <div class='credit'>
+                        
+                        <a href='https://open.spotify.com/artist/13VunSzrVSmJBpUWxUajJF' class='spotify'>
+                            <i class="fab fa-spotify"></i> <br>music by Limbo 
+                        </a>
                         |
-                    
-                    <a class='donate' href=https://secure2.convio.net/accn/site/Donation2;jsessionid=00000000.app20115a?idb=14831026&1400.donation=form1&df_id=1400&mfc_pref=T&NONCE_TOKEN=4611148D19C534AAECBC2633B900B3DF&idb=0>
-                        <i class="fas fa-paw"></i>
-                        <br>
-                        click here to help a homeless animal
-                    </a>
+                        
+                        <a class='donate' href=https://secure2.convio.net/accn/site/Donation2;jsessionid=00000000.app20115a?idb=14831026&1400.donation=form1&df_id=1400&mfc_pref=T&NONCE_TOKEN=4611148D19C534AAECBC2633B900B3DF&idb=0>
+                            <i class="fas fa-paw"></i>
+                            <br>
+                            click here to help a homeless animal
+                        </a>
                         |
-                    
-                    <a href='https://www.instagram.com/cappytheshibe/?hl=en' class='instagram'>
-                        <i class="fab fa-instagram"></i><br> inspired by Captain
-                    </a>
-                    
-    
+                        
+                        <a href='https://www.instagram.com/cappytheshibe/?hl=en' class='instagram'>
+                            <i class="fab fa-instagram"></i><br> inspired by Captain
+                        </a>
+                        
+                        
+                    </div>
                 </div>
+                
             </div>
-        
         </div>
     </body>
-
+    
 </html>
