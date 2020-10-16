@@ -1,7 +1,6 @@
 keys = [];
 
 window.addEventListener('keydown', function(e){
-    debugger
     keys[e.keyCode] = true;
 });
 
