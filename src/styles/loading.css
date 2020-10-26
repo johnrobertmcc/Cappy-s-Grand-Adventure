@@ -1,3 +1,7 @@
-/* .show{
-    display: none; 
-} */
+#background-canvas{
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+    /* position: absolute; */
+    /* background: pink; */
+}

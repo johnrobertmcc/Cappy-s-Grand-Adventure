@@ -86,7 +86,7 @@
 
 }
 
-canvas{ 
+#canvas{ 
     /* position: absolute; */
     -webkit-box-shadow: -23px 200px 161px 82px rgba(0,0,0,0.07);
     -moz-box-shadow: -23px 200px 161px 82px rgba(0,0,0,0.07);
@@ -103,6 +103,13 @@ canvas{
     height: 700px;
 }
 
+/* #background-canvas{
+    -webkit-box-shadow: -23px 200px 161px 82px rgba(0,0,0,0.07);
+    -moz-box-shadow: -23px 200px 161px 82px rgba(0,0,0,0.07);
+    box-shadow: -23px 200px 161px 82px rgba(0,0,0,0.07);
+    width: 1000px;
+    height: 700px;
+} */
 body{
     overflow: none;
     background-color: ghostwhite;
