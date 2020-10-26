@@ -136,13 +136,13 @@ function moveThisLad(){
         player.frameY = 12;
         player.frameX = 0;
         player.moving = false;   
-        player.h = 141;
+        player.h = 134;
     }
      if(keys[40] && player.y === 575 && player.faceLeft){
         player.frameY = 13;
         player.frameX = 0;
         player.moving = false;   
-        player.h = 141;
+        player.h = 134;
     }
 
 }
