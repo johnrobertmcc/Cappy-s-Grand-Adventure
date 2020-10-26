@@ -340,7 +340,7 @@ function animate() {
 // limbo.play();
 
 
-//for particles
+//FOR PARTICLES
 // init();
 
 
