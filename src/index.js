@@ -138,6 +138,12 @@ function moveThisLad(){
         player.moving = false;   
         player.h = 141;
     }
+     if(keys[40] && player.y === 575 && player.faceLeft){
+        player.frameY = 13;
+        player.frameX = 0;
+        player.moving = false;   
+        player.h = 141;
+    }
 
 }
 
@@ -164,7 +170,7 @@ function resetOnStand(){
     if(!player.moving && !player.jumping && !player.running && player.y === 575 && !player.faceLeft && player.frameY !== 12){
         player.frameX = 0;
         player.frameY = 0;
-    } else if(!player.moving && !player.jumping && !player.running && player.faceLeft && player.frameY !== 12){
+    } else if(!player.moving && !player.jumping && !player.running && player.faceLeft && player.frameY !== 13){
         player.frameX = 0;
         player.frameY = 1
     }
