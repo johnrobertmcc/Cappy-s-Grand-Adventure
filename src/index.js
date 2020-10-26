@@ -36,7 +36,7 @@ const player = {
 }
 
 const captain = new Image();
-captain.src = 'src/styles/images/captainV3.png'
+captain.src = 'src/styles/images/captainv6.png'
 
 function drawCaptain(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
@@ -131,13 +131,13 @@ function moveThisLad(){
         player.y += 5
     }
 
-    ////for sitting
-    // if(keys[40] && player.y === 575){
-
-    //     player.frameY = 7;
-    //     player.frameX = 0;
-    //     player.moving = false;   
-    // }
+    //for sitting
+    if(keys[40] && player.y === 575){
+        player.frameY = 12;
+        player.frameX = 0;
+        player.moving = false;   
+        player.h = 141;
+    }
 
 }
 
@@ -161,10 +161,10 @@ function applyGravity(){
 }
 
 function resetOnStand(){
-    if(!player.moving && !player.jumping && !player.running && player.y === 575 && !player.faceLeft){
+    if(!player.moving && !player.jumping && !player.running && player.y === 575 && !player.faceLeft && player.frameY !== 12){
         player.frameX = 0;
         player.frameY = 0;
-    } else if(!player.moving && !player.jumping && !player.running && player.faceLeft){
+    } else if(!player.moving && !player.jumping && !player.running && player.faceLeft && player.frameY !== 12){
         player.frameX = 0;
         player.frameY = 1
     }
@@ -192,6 +192,12 @@ function makeHimJump() {
         player.frameX ++;
     }else if(player.moving === false && player.y <= 601){
         player.jumping === false
+    }
+}
+
+function letHimRest() {
+    if(player.frameX < 3 && player.frameY === 12){
+        player.frameX ++
     }
 }
 
@@ -260,6 +266,7 @@ function animate() {
         makeHimWalk();
         applyGravity();
         // changeBackground();
+        letHimRest();
         makeHimJump();
         resetOnStand();
         toggleRun();
