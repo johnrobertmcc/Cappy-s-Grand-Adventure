@@ -7,7 +7,7 @@ canvas.height = 700;
 canvas.width = 1000;
 
 const first = new Image();
-first.src = 'src/styles/images/city.png'
+first.src = 'src/levels/first_level.png'
 
 const second = new Image();
 second.src = 'src/styles/images/two.jpg'
@@ -206,57 +206,57 @@ function letHimRest() {
         player.frameX ++
     }
 }
+//FOR PARTICLE CANVAS
+                    // function Particle(x, y, dX, dY, size, color){
+                    //     this.x = x;
+                    //     this.y = y;
+                    //     this.dX = dX;
+                    //     this.dY = dY;
+                    //     this.size = size;
+                    //     this.color = color;
+                    // }
 
-function Particle(x, y, dX, dY, size, color){
-    this.x = x;
-    this.y = y;
-    this.dX = dX;
-    this.dY = dY;
-    this.size = size;
-    this.color = color;
-}
+                    // let particleArray;
 
-let particleArray;
+                    // Particle.prototype.draw = function(){
+                    //     ctx.beginPath();
+                    //     ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false);
+                    //     ctx.fillStyle = "rgba(255, 255, 0, 0.2)"
+                    //     ctx.alpha = 0.4
+                    //     ctx.fill();
+                    // }
 
-Particle.prototype.draw = function(){
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false);
-    ctx.fillStyle = "rgba(255, 255, 255, 0.2)"
-    ctx.alpha = 0.4
-    ctx.fill();
-}
+                    // Particle.prototype.update = function() {
+                    //     if(this.x + this.size > canvas.width || this.x - this.size < 0){
+                    //         this.dX = -this.dX;
+                    //     }
+                    //     if(this.y + this.size > canvas.height || this.y - this.size < 0){
+                    //         this.dY = -this.dY;
+                    //     }
+                        
+                    //     this.x += this.dX;
+                    //     this.y += this.dY;
+                    //     this.draw();
+                    // }
 
-Particle.prototype.update = function() {
-    if(this.x + this.size > canvas.width || this.x - this.size < 0){
-        this.dX = -this.dX;
-    }
-    if(this.y + this.size > canvas.height || this.y - this.size < 0){
-        this.dY = -this.dY;
-    }
-    
-    this.x += this.dX;
-    this.y += this.dY;
-    this.draw();
-}
+                    // function init(){
+                    //     particleArray = [];
+                    //     for(let i = 0; i < 100; i++){
+                    //         let size = Math.floor(Math.random() * 6 + 1)
+                    //         let x = Math.random() * (innerWidth - size * 2);
+                    //         let y = Math.random() * (innerHeight - size * 2);
+                    //         let dX = (Math.random() * .4) - .5;
+                    //         let dY = (Math.random() * .4) - .5;
+                    //         let color = 'white'
+                    //         particleArray.push(new Particle(x, y, dX, dY, size, color))
 
-function init(){
-    particleArray = [];
-    for(let i = 0; i < 100; i++){
-        let size = Math.floor(Math.random() * 6 + 1)
-        let x = Math.random() * (innerWidth - size * 2);
-        let y = Math.random() * (innerHeight - size * 2);
-        let dX = (Math.random() * .4) - .5;
-        let dY = (Math.random() * .4) - .5;
-        let color = 'white'
-        particleArray.push(new Particle(x, y, dX, dY, size, color))
+                    //     }
 
-    }
-
-}
+                    // }
 
 
 
-const particle1 = new Particle(10,10,1,1,5,'white');
+                    // // const particle1 = new Particle(10,10,1,1,5,'white');
 
 
 let bgn_idx = 0;
@@ -318,13 +318,12 @@ function animate() {
             player.w * .9, 
             player.h * .9,            
         )
-        // particleArray.forEach( particle => {
-        //     particle.update()
-        // })
 
-        for(i = 0; i < particleArray.length; i ++){
-            particleArray[i].update();
-        }
+        //for particles -- 
+
+        // for(i = 0; i < particleArray.length; i ++){
+        //     particleArray[i].update();
+        // }
         
         moveThisLad();
         makeHimWalk();
@@ -340,7 +339,11 @@ function animate() {
 }
 // limbo.play();
 
-init();
+
+//for particles
+// init();
+
+
 animation(20);
 
 
