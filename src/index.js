@@ -48,6 +48,7 @@ window.addEventListener('keydown', function(e){
     if(keys[13]){
         mode = 1;
         enterGame();
+        toggleText();
     }
 
 });
@@ -59,6 +60,11 @@ window.addEventListener('keyup', function(e){
 });
 
 
+function toggleText() {
+    document.getElementById("begin").className ='none';
+    let ele = document.getElementById('one');
+    ele.classList.remove('one')
+}
 
 
 function moveThisLad(){
@@ -291,7 +297,7 @@ function moveThatMouse(){
     }else{
         mouseStuff.frameX = 0
     }
-    if(mouseStuff.x !== 0){
+    if(mouseStuff.x > -200){
         mouseStuff.x--
     }
     

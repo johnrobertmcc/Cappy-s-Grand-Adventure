@@ -91,6 +91,10 @@
 }
 
 
+#begin{
+    margin-top: 300px;
+}
+
 /* #background-canvas{
     -webkit-box-shadow: -23px 200px 161px 82px rgba(0,0,0,0.07);
     -moz-box-shadow: -23px 200px 161px 82px rgba(0,0,0,0.07);
@@ -145,3 +149,14 @@ a:active { text-decoration: none; color:black }
     color: rgb(222, 96, 233)
 }
 
+.none{
+    display: none
+}
+
+.temp{
+    display: none
+}
+
+#one{
+    /* display:none */
+}
