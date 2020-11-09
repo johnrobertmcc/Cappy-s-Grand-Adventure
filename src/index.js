@@ -42,22 +42,12 @@ function drawCaptain(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
 }
 
-let mice = [];
-const mouse = new Image();
-mouse.src = 'src/styles/images/mouse_sprite.png'
-
-function drawMouse(img, sX, sY, sW, sH, dX, dY, dW, dH){
-    ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
-}
-
-
 window.addEventListener('keydown', function(e){
     keys[e.keyCode] = true;
     player.moving = true;
     if(keys[13]){
-        // debugger
         mode = 1;
-        console.log(`mode is: ${mode}`)
+        enterGame();
     }
 
 });
@@ -67,6 +57,8 @@ window.addEventListener('keyup', function(e){
     player.moving = false;
     player.running = false;
 });
+
+
 
 
 function moveThisLad(){
@@ -215,6 +207,8 @@ function letHimRest() {
         player.frameX ++
     }
 }
+
+
 //FOR PARTICLE CANVAS
 function Particle(x, y, dX, dY, size, color){
     this.x = x;
@@ -250,7 +244,7 @@ Particle.prototype.update = function() {
 
 function init(color){
     particleArray = [];
-    console.log(`the mode is ${mode} and the color is ${color}`)
+    console.log(`t   init('white')he mode is ${mode} and the color is ${color}`)
     for(let i = 0; i < 100; i++){
         let size = Math.floor(Math.random() * 6 + 1)
         let x = Math.random() * (innerWidth - size * 2);
@@ -261,25 +255,63 @@ function init(color){
     }
 }
 
+
+let mice;
+
+function makeMice(){
+
+    mice = [];
+    console.log(`there are ${mice.length} mice here`)
+    for(let i = 0; i < first.width; i ++){
+        mice.push(new Mouse())
+    }
+
+}
+
+const mouse = new Image();
+mouse.src = 'src/styles/images/mouse_sprite.png'
+
+function drawMouse(img, sX, sY, sW, sH, dX, dY, dW, dH){
+    ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
+}
+
+const mouseStuff = {
+
+    x: 500,
+    y: 580,
+    w: 48,
+    h: 48,
+    frameX: 0,
+    frameY: 1,
+}
+
+function moveThatMouse(){
+    if(mouseStuff.frameX < 3){
+        mouseStuff.frameX ++
+    }else{
+        mouseStuff.frameX = 0
+    }
+    if(mouseStuff.x !== 0){
+        mouseStuff.x--
+    }
+    
+}
+
+
+
 let bgn_idx = 0;
 let bgn = backgrounds[bgn_idx];
 
 //FOR LEVELS
-function changeBackground(){
-    let temp = (bgn.width * -1)
-    let next_state = (temp + 1000)
-    if(player.position <= next_state){
-        bgn_idx++
-        bgn = backgrounds[bgn_idx]
-        player.position = -10;
-    }
-    // else if(player.position > 0){
-    //     debugger
-    //     bgn_idx = bgn_idx - 1;
-    //     bgn = backgrounds[bgn_idx];
-    //     player.position = bgn.width - 1000;
-    // }
-}
+// function changeBackground(){
+//     let temp = (bgn.width * -1)
+//     let next_state = (temp + 1000)
+//     if(player.position <= next_state){
+//         bgn_idx++
+//         bgn = backgrounds[bgn_idx]
+//         player.position = -10;
+//     }
+// }
 
 let fps, fpsInterval, startTime, now, then, elapsed; //global variables
 
@@ -318,6 +350,17 @@ function animate() { //MAIN GAME
             player.h * .9,            
         )
 
+        drawMouse(
+            mouse, 
+            mouseStuff.w * mouseStuff.frameX, 
+            mouseStuff.h * mouseStuff.frameY, 
+            mouseStuff.w, 
+            mouseStuff.h, 
+            mouseStuff.x, 
+            mouseStuff.y, 
+            mouseStuff.w*2, 
+            mouseStuff.h*2)
+
         //for particles -- 
 
         for(i = 0; i < particleArray.length; i ++){
@@ -332,6 +375,7 @@ function animate() { //MAIN GAME
         makeHimJump();
         resetOnStand();
         toggleRun();
+        moveThatMouse();
     }
 }
 
@@ -340,22 +384,18 @@ function animate() { //MAIN GAME
 let mode = 0;
 
 function enterGame(){
-    // let startScreenPos = 0;
-    // if(mode==0) {
-    //     debugger
-    //     init('black');
-    //     console.log(`mode is: ${mode}`);
-    //     ctx.clearRect(0,0, canvas.width, canvas.height);
-    //     ctx.drawImage(first, 0, 0, startScreenPos, canvas.height);
-    //     startScreenPos--;
-    // }else if(mode==1){ //starts the game
-    //     debugger
+    
+    if(mode==0) {
+        init('white');
+    }
+    
+    if(mode==1){ 
         animation(20); 
-        init('rgba(255, 255, 255, 0.5)');
+        init('rgba(255, 255, 255, 0.2)');
         const audio = document.querySelector("audio");
         audio.volume = 0.2;
         audio.play();
-    // }
+    }
 }
 
 enterGame();

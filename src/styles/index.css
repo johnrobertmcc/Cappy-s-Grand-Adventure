@@ -76,6 +76,10 @@
 .background{
     display: flex;
     justify-content: center;
+    background: #702995;
+    background: -webkit-linear-gradient(top left, #702995, #225238));
+    background: -moz-linear-gradient(top left, #702995, #225238));
+    background: linear-gradient(to bottom right, #702995, #225238);
   
 }
 .title{
@@ -97,7 +101,7 @@
 body{
     overflow: none;
     background-color: ghostwhite;
-    /* background-color: rgb(36,28,28); */
+    
 }
 
 .instructions{
