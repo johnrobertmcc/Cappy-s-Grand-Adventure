@@ -7,7 +7,7 @@ canvas.height = 700;
 canvas.width = 1000;
 
 const first = new Image();
-first.src = 'src/levels/first_level.png'
+first.src = 'src/styles/images/city.png'
 
 const second = new Image();
 second.src = 'src/styles/images/two.jpg'
@@ -278,7 +278,7 @@ function changeBackground(){
     // }
 }
 
-let fps, fpsInterval, startTime, now, then, elapsed; //global variables
+let fps, fpsInterval, startTime, now, then, elapsed, mode; //global variables
 
 
 function animation(fps){
@@ -293,7 +293,6 @@ window.addEventListener("DOMContentLoaded", event => {
   audio.volume = 0.2;
   audio.play();
 });
-
 
 function animate() {
     
@@ -343,8 +342,31 @@ function animate() {
 //FOR PARTICLES
 init();
 
+//FOR START SCREEN
 
-animation(20);
+function setup(){
+    mode = 0;
+}
+
+function draw(){
+    ctx.clear();
+    if(mode==0) {
+        text('Press Enter to Start', 20, 20);
+    }
+}
+
+function enterGame(){
+    if(keyCode===ENTER){
+        mode=1;
+    }
+    if(mode==1){
+        animation(20); //starts the game
+    }
+}
+
+draw();
+
+// animation(20);
 
 
 
