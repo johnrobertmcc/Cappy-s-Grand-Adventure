@@ -36,18 +36,29 @@ const player = {
 }
 
 const captain = new Image();
-captain.src = 'src/styles/images/captainv6.png'
+captain.src = 'src/styles/images/captainv6.png';
 
 function drawCaptain(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
 }
-//source
-//desination
+
+let mice = [];
+const mouse = new Image();
+mouse.src = 'src/styles/images/mouse_sprite.png'
+
+function drawMouse(img, sX, sY, sW, sH, dX, dY, dW, dH){
+    ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
+}
 
 
 window.addEventListener('keydown', function(e){
     keys[e.keyCode] = true;
     player.moving = true;
+    if(keys[13]){
+        // debugger
+        mode = 1;
+        console.log(`mode is: ${mode}`)
+    }
 
 });
 
@@ -59,8 +70,6 @@ window.addEventListener('keyup', function(e){
 
 
 function moveThisLad(){
-
-    
     //move right
     
     if(keys[39] && player.x < 550) {
@@ -207,61 +216,55 @@ function letHimRest() {
     }
 }
 //FOR PARTICLE CANVAS
-                    function Particle(x, y, dX, dY, size, color){
-                        this.x = x;
-                        this.y = y;
-                        this.dX = dX;
-                        this.dY = dY;
-                        this.size = size;
-                        this.color = color;
-                    }
+function Particle(x, y, dX, dY, size, color){
+    this.x = x;
+    this.y = y;
+    this.dX = dX;
+    this.dY = dY;
+    this.size = size;
+    this.color = color;
+}
 
-                    let particleArray;
+let particleArray;
 
-                    Particle.prototype.draw = function(){
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false);
-                        ctx.fillStyle = "rgba(255, 255, 0, 0.2)"
-                        ctx.alpha = 0.4
-                        ctx.fill();
-                    }
+Particle.prototype.draw = function(){
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false);
+    ctx.fillStyle = this.color
+    ctx.alpha = 0.4
+    ctx.fill();
+}
 
-                    Particle.prototype.update = function() {
-                        if(this.x + this.size > canvas.width || this.x - this.size < 0){
-                            this.dX = -this.dX;
-                        }
-                        if(this.y + this.size > canvas.height || this.y - this.size < 0){
-                            this.dY = -this.dY;
-                        }
-                        
-                        this.x += this.dX;
-                        this.y += this.dY;
-                        this.draw();
-                    }
+Particle.prototype.update = function() {
+    if(this.x + this.size > canvas.width || this.x - this.size < 0){
+        this.dX = -this.dX;
+    }
+    if(this.y + this.size > canvas.height || this.y - this.size < 0){
+        this.dY = -this.dY;
+    }
+    
+    this.x += this.dX;
+    this.y += this.dY;
+    this.draw();
+}
 
-                    function init(){
-                        particleArray = [];
-                        for(let i = 0; i < 100; i++){
-                            let size = Math.floor(Math.random() * 6 + 1)
-                            let x = Math.random() * (innerWidth - size * 2);
-                            let y = Math.random() * (innerHeight - size * 2);
-                            let dX = (Math.random() * .4) - .5;
-                            let dY = (Math.random() * .4) - .5;
-                            let color = 'white'
-                            particleArray.push(new Particle(x, y, dX, dY, size, color))
-
-                        }
-
-                    }
-
-
-
-                    const particle1 = new Particle(10,10,1,1,5,'white');
-
+function init(color){
+    particleArray = [];
+    console.log(`the mode is ${mode} and the color is ${color}`)
+    for(let i = 0; i < 100; i++){
+        let size = Math.floor(Math.random() * 6 + 1)
+        let x = Math.random() * (innerWidth - size * 2);
+        let y = Math.random() * (innerHeight - size * 2);
+        let dX = (Math.random() * .4) - .5;
+        let dY = (Math.random() * .4) - .5;
+        particleArray.push(new Particle(x, y, dX, dY, size, color))
+    }
+}
 
 let bgn_idx = 0;
 let bgn = backgrounds[bgn_idx];
 
+//FOR LEVELS
 function changeBackground(){
     let temp = (bgn.width * -1)
     let next_state = (temp + 1000)
@@ -278,7 +281,7 @@ function changeBackground(){
     // }
 }
 
-let fps, fpsInterval, startTime, now, then, elapsed, mode; //global variables
+let fps, fpsInterval, startTime, now, then, elapsed; //global variables
 
 
 function animation(fps){
@@ -288,13 +291,10 @@ function animation(fps){
     animate();
 }
 
-window.addEventListener("DOMContentLoaded", event => {
-  const audio = document.querySelector("audio");
-  audio.volume = 0.2;
-  audio.play();
-});
 
-function animate() {
+
+
+function animate() { //MAIN GAME
     
     requestAnimationFrame(animate);
     now = Date.now();
@@ -332,42 +332,33 @@ function animate() {
         makeHimJump();
         resetOnStand();
         toggleRun();
-    
-
     }
 }
-// limbo.play();
 
-
-//FOR PARTICLES
-init();
 
 //FOR START SCREEN
-
-function setup(){
-    mode = 0;
-}
-
-function draw(){
-    ctx.clear();
-    if(mode==0) {
-        text('Press Enter to Start', 20, 20);
-    }
-}
+let mode = 0;
 
 function enterGame(){
-    if(keyCode===ENTER){
-        mode=1;
-    }
-    if(mode==1){
-        animation(20); //starts the game
-    }
+    // let startScreenPos = 0;
+    // if(mode==0) {
+    //     debugger
+    //     init('black');
+    //     console.log(`mode is: ${mode}`);
+    //     ctx.clearRect(0,0, canvas.width, canvas.height);
+    //     ctx.drawImage(first, 0, 0, startScreenPos, canvas.height);
+    //     startScreenPos--;
+    // }else if(mode==1){ //starts the game
+    //     debugger
+        animation(20); 
+        init('rgba(255, 255, 255, 0.5)');
+        const audio = document.querySelector("audio");
+        audio.volume = 0.2;
+        audio.play();
+    // }
 }
 
-draw();
-
-// animation(20);
-
+enterGame();
 
 
 
