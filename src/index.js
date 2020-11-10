@@ -62,8 +62,7 @@ window.addEventListener('keyup', function(e){
 
 function toggleText() {
     document.getElementById("begin").className ='none';
-    let ele = document.getElementById('one');
-    ele.classList.remove('one')
+    document.getElementById("one").className ='temp';
 }
 
 
@@ -255,7 +254,7 @@ function init(color){
     for(let i = 0; i < 100; i++){
         let size = Math.floor(Math.random() * 6 + 1)
         let x = Math.random() * (innerWidth - size * 2);
-        let y = Math.random() * (innerHeight - size * 2);
+        let y = getRandomInt(300);
         let dX = (Math.random() * .4) - .5;
         let dY = (Math.random() * .4) - .5;
         particleArray.push(new Particle(x, y, dX, dY, size, color))
@@ -263,20 +262,21 @@ function init(color){
 }
 
 
-let mice = [];
+let mice = []; //a
 
-const mouse = new Image();
+const mouse = new Image(); //a.1
 mouse.src = 'src/styles/images/mouse_sprite.png'
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-
+//c
 function drawMouse(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
 }
 
+//b
 function Mouse(img, x, y, w, h, fX, fY, speed){
     this.img = img;
     this.x = x;
@@ -299,6 +299,7 @@ function makeMice(){
     debugger
 
     for(let i = 0; i < j; i ++){
+        // mice.push(new Mouse(mouse, ))
  
     }
         
@@ -322,6 +323,19 @@ function drawMice(){
         )
     })
 }
+
+// let mouse1 = new Mouse(  
+//     x: 500,
+//     y: 580,
+//     w: 48,
+//     h: 48,
+//     frameX: 0,
+//     frameY: 1,
+//     speed: 6
+// )
+
+
+
 
 
 
@@ -372,15 +386,27 @@ function animate() { //MAIN GAME
             player.h * .9,            
             )
 
+            // drawMouse(
+            //     mouse,
+            //     mouse1.w * mouse1.frameX, 
+            //     mouse1.h * mouse1.frameY, 
+            //     mouse1.w, 
+            //     mouse1.h, 
+            //     mouse1.x, 
+            //     mouse1.y, 
+            //     mouse1.w*2, 
+            //     mouse1.h*2
+            // )
+
         for(i = 0; i < particleArray.length; i ++){
             particleArray[i].update();
         }
         
         moveThisLad();
-        makeMice();
+        // makeMice();
         makeHimWalk();
         applyGravity();
-        drawMice();
+        // drawMice();
         letHimRest();
         makeHimJump();
         resetOnStand();
@@ -400,7 +426,7 @@ function enterGame(){
     }
     if(mode==1){ 
         animation(20); 
-        init('rgba(255, 255, 255, 0.2)');
+        init('rgba(255, 255, 255, 0.1)');
         const audio = document.querySelector("audio");
         audio.volume = 0.2;
         audio.play();
