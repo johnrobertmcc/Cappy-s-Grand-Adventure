@@ -71,16 +71,16 @@ function moveThisLad(){
     //move right
     
     if(keys[39] && player.x < 550) {
-        player.position -= 5
+        player.position -= 4
         player.frameY = 0;
-        player.x += player.speed;
+        player.x += 2;
         player.moving = true;
         player.faceLeft = false;
     }
 
     if(keys[39] && player.x >=550) {
         player.moving = true;
-        player.position -= 5;
+        player.position -= 4;
         player.faceLeft = false;
     }
     if(player.y === 575 && keys[16] && keys[39]){
@@ -99,7 +99,7 @@ function moveThisLad(){
         player.position += 5
         player.moving = true;
         player.frameY = 1;
-         player.h = 125;
+        player.h = 125;
         player.x -= player.speed;
         player.faceLeft = true;
 
@@ -122,7 +122,8 @@ function moveThisLad(){
         player.frameX = 0;
         player.frameY = 4;
         player.h = 130
-        player.y -= 40
+        player.y -= 100
+        player.x += 10
         player.jumping = true;
     }
     if(keys[38] && player.y === 575 && player.faceLeft){
@@ -164,7 +165,7 @@ function toggleRun(){
 
 function applyGravity(){
     while(player.y > 602){
-        player.y += 5;
+        player.y += 10;
         player.frameX = 0;
         player.frameY = 0;
     }
@@ -250,7 +251,7 @@ Particle.prototype.update = function() {
 
 function init(color){
     particleArray = [];
-    console.log(`t   init('white')he mode is ${mode} and the color is ${color}`)
+    
     for(let i = 0; i < 100; i++){
         let size = Math.floor(Math.random() * 6 + 1)
         let x = Math.random() * (innerWidth - size * 2);
@@ -262,62 +263,80 @@ function init(color){
 }
 
 
-let mice;
-
-function makeMice(){
-
-    mice = [];
-    console.log(`there are ${mice.length} mice here`)
-    for(let i = 0; i < first.width; i ++){
-        mice.push(new Mouse())
-    }
-
-}
+let mice = [];
 
 const mouse = new Image();
 mouse.src = 'src/styles/images/mouse_sprite.png'
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 
 function drawMouse(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
 }
 
-const mouseStuff = {
-
-    x: 500,
-    y: 580,
-    w: 48,
-    h: 48,
-    frameX: 0,
-    frameY: 1,
-}
-
-function moveThatMouse(){
-    if(mouseStuff.frameX < 3){
-        mouseStuff.frameX ++
-    }else{
-        mouseStuff.frameX = 0
-    }
-    if(mouseStuff.x > -200){
-        mouseStuff.x--
-    }
-    
+function Mouse(img, x, y, w, h, fX, fY, speed){
+    this.img = img;
+    this.x = x;
+    this.y = y;
+    this.h = h;
+    this.w = w;
+    this.fX = fX;
+    this.fY = fY;
+    this.speed = speed;
 }
 
 
 
-let bgn_idx = 0;
-let bgn = backgrounds[bgn_idx];
+function makeMice(){
 
-//FOR LEVELS
-// function changeBackground(){
-//     let temp = (bgn.width * -1)
-//     let next_state = (temp + 1000)
-//     if(player.position <= next_state){
-//         bgn_idx++
-//         bgn = backgrounds[bgn_idx]
-//         player.position = -10;
+    let j = getRandomInt(10);
+
+    let speed = getRandomInt(6);
+
+    debugger
+
+    for(let i = 0; i < j; i ++){
+ 
+    }
+        
+    console.log(`there are ${mice.length} mice here`)
+}
+
+function drawMice(){
+
+    return mice.forEach(mouse => {
+
+        drawMouse(
+            mouse, 
+            mouse.w * mouse.frameX, 
+            mouse.h * mouse.frameY, 
+            mouse.w, 
+            mouse.h, 
+            mouse.x, 
+            mouse.y, 
+            mouse.w * .9, 
+            mouse.h * .9,            
+        )
+    })
+}
+
+
+
+// function moveThatMouse(){
+//     if(mouseStuff.frameX < 3){
+//         mouseStuff.frameX ++
+//     }else{
+//         mouseStuff.frameX = 0
 //     }
+//     if(mouseStuff.x > -200){
+//         mouseStuff.x -= mouseStuff.speed
+//     }
+    
 // }
+
 
 let fps, fpsInterval, startTime, now, then, elapsed; //global variables
 
@@ -329,9 +348,6 @@ function animation(fps){
     animate();
 }
 
-
-
-
 function animate() { //MAIN GAME
     
     requestAnimationFrame(animate);
@@ -342,7 +358,7 @@ function animate() { //MAIN GAME
 
         ctx.clearRect(0,0, canvas.width, canvas.height);
 
-        ctx.drawImage(first, (player.position % first.width - 500), 0, first.width, canvas.height);
+        ctx.drawImage(first, player.position, 0, first.width, canvas.height);
 
         drawCaptain(
             captain, 
@@ -354,34 +370,22 @@ function animate() { //MAIN GAME
             player.y, 
             player.w * .9, 
             player.h * .9,            
-        )
-
-        drawMouse(
-            mouse, 
-            mouseStuff.w * mouseStuff.frameX, 
-            mouseStuff.h * mouseStuff.frameY, 
-            mouseStuff.w, 
-            mouseStuff.h, 
-            mouseStuff.x, 
-            mouseStuff.y, 
-            mouseStuff.w*2, 
-            mouseStuff.h*2)
-
-        //for particles -- 
+            )
 
         for(i = 0; i < particleArray.length; i ++){
             particleArray[i].update();
         }
         
         moveThisLad();
+        makeMice();
         makeHimWalk();
         applyGravity();
-        // changeBackground();
+        drawMice();
         letHimRest();
         makeHimJump();
         resetOnStand();
         toggleRun();
-        moveThatMouse();
+        // moveThatMouse();
     }
 }
 
@@ -394,7 +398,6 @@ function enterGame(){
     if(mode==0) {
         init('white');
     }
-    
     if(mode==1){ 
         animation(20); 
         init('rgba(255, 255, 255, 0.2)');
