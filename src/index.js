@@ -289,23 +289,6 @@ function Mouse(img, x, y, w, h, fX, fY, position, speed){
 }
 
 
-
-// function makeMice(){
-
-//     let j = getRandomInt(10);
-
-//     let speed = getRandomInt(6);
-
-//     debugger
-
-//     for(let i = 0; i < j; i ++){
-//         // mice.push(new Mouse(mouse, ))
- 
-//     }
-        
-//     console.log(`there are ${mice.length} mice here`)
-// }
-
 const mice = {
     mouse1 : {
         img: mouseImg, 
@@ -364,7 +347,7 @@ const mice = {
     },
     mouse6 : {
         img: mouseImg, 
-        x: 1500,
+        x: 2500,
         y: 580,
         w: 48,
         h: 48,
@@ -372,6 +355,105 @@ const mice = {
         frameY: 1,
         position: 0,
         speed: 10
+    },
+    mouse7 : {
+        img: mouseImg, 
+        x: 6000,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 6
+    },
+    mouse8 : {
+        img: mouseImg, 
+        x: 7100,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 9
+    },
+    mouse9 : {
+        img: mouseImg, 
+        x: 40000,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 10
+    },
+    mouse10 : {
+        img: mouseImg, 
+        x: 2800,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 6
+    },
+    mouse11 : {
+        img: mouseImg, 
+        x: 1570,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 8
+    },
+    mouse12 : {
+        img: mouseImg, 
+        x: 1500,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 5
+    },
+    mouse13 : {
+        img: mouseImg, 
+        x: 2000,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 5
+    },
+    mouse14 : {
+        img: mouseImg, 
+        x: 1900,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 6
+    },
+    mouse15 : {
+        img: mouseImg, 
+        x: 2500,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 6
     },
 
 }
@@ -398,13 +480,17 @@ function drawMice(){
 }
 
 
-// function collisionCheck(){
+function collisionCheck(){
 
-//     if(player.x === mouse1.x - 48){
-//        mode = 2;
-//        enterGame();
-//     }
-// }
+    let arr = Object.values(mice)
+
+    for(let i = 0; i < arr.length; i++){
+        if(player.x === arr[i].x - 48){
+        mode = 2;
+        enterGame();
+        }
+    }
+}
 
 
 
@@ -420,7 +506,7 @@ function moveThatMouse(){
             arr[i].frameX = 0;
         }
         if(arr[i].x > -200){
-            arr[i].x -= arr[i].speed
+            arr[i].x -= arr[i].speed;
             arr[i].position --;
         }
     }
@@ -431,6 +517,7 @@ let fps, fpsInterval, startTime, now, then, elapsed; //global variables
 
 
 function animation(fps){
+    
     fpsInterval = 1000/fps;
     then = Date.now();
     startTime = then;
@@ -461,24 +548,11 @@ function animate() { //MAIN GAME
             player.h * .9,            
             )
 
-        // drawMouse(
-        //     mouseImg,
-        //     mouse1.w * mouse1.frameX, 
-        //     mouse1.h * mouse1.frameY, 
-        //     mouse1.w, 
-        //     mouse1.h, 
-        //     mouse1.x, 
-        //     mouse1.y, 
-        //     mouse1.w*2, 
-        //     mouse1.h*2
-        // )
-
         for(i = 0; i < particleArray.length; i ++){
             particleArray[i].update();
         }
         
         moveThisLad();
-        // makeMice();
         makeHimWalk();
         applyGravity();
         drawMice();
@@ -487,10 +561,17 @@ function animate() { //MAIN GAME
         resetOnStand();
         toggleRun();
         moveThatMouse();
-        // collisionCheck();
+        collisionCheck();
     }
 }
 
+const gO = new Image(); //a.1
+gO.src = 'src/styles/images/gameover.jpg'
+
+function gameOver(){
+    ctx.drawImage(gO, 0, 0, canvas.width, canvas.height);
+    animation(0)
+}
 
 
 //FOR START SCREEN
@@ -507,8 +588,9 @@ function enterGame(){
         const audio = document.querySelector("audio");
         audio.volume = 0.2;
         audio.play();
-    }else if(mode ==2){
-        console.log("GameOver!")
+    }else if(mode == 2){
+        gameOver();
+        
     }
 }
 
