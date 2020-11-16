@@ -121,8 +121,8 @@ function moveThisLad(){
         player.frameX = 0;
         player.frameY = 4;
         player.h = 130
-        player.y -= 100
-        player.x += 10
+        player.y -= 50
+        // player.position += 10
         player.jumping = true;
     }
     if(keys[38] && player.y === 575 && player.faceLeft){
