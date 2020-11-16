@@ -261,8 +261,7 @@ function init(color){
     }
 }
 
-
-let mice = []; //a
+ //a
 
 const mouseImg = new Image(); //a.1
 mouseImg.src = 'src/styles/images/mouse_sprite.png'
@@ -291,76 +290,140 @@ function Mouse(img, x, y, w, h, fX, fY, position, speed){
 
 
 
-function makeMice(){
+// function makeMice(){
 
-    let j = getRandomInt(10);
+//     let j = getRandomInt(10);
 
-    let speed = getRandomInt(6);
+//     let speed = getRandomInt(6);
 
-    debugger
+//     debugger
 
-    for(let i = 0; i < j; i ++){
-        // mice.push(new Mouse(mouse, ))
+//     for(let i = 0; i < j; i ++){
+//         // mice.push(new Mouse(mouse, ))
  
-    }
+//     }
         
-    console.log(`there are ${mice.length} mice here`)
+//     console.log(`there are ${mice.length} mice here`)
+// }
+
+const mice = {
+    mouse1 : {
+        img: mouseImg, 
+        x: 500,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 3
+    },
+    mouse2 : {
+        img: mouseImg, 
+        x: 1100,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 6
+    },
+    mouse3 : {
+        img: mouseImg, 
+        x: 3000,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 8
+    },
+    mouse4 : {
+        img: mouseImg, 
+        x: 2000,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 6
+    },
+    mouse5 : {
+        img: mouseImg, 
+        x: 1500,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 9
+    },
+    mouse6 : {
+        img: mouseImg, 
+        x: 1500,
+        y: 580,
+        w: 48,
+        h: 48,
+        frameX: 0,
+        frameY: 1,
+        position: 0,
+        speed: 10
+    },
+
 }
 
 function drawMice(){
 
-    return mice.forEach(mouse => {
+    // debugger
+    let arr = Object.values(mice)
+
+    for(let i = 0; i < arr.length; i++){
 
         drawMouse(
-            mouse.img, 
-            mouse.w * mouse.frameX, 
-            mouse.h * mouse.frameY, 
-            mouse.w, 
-            mouse.h, 
-            mouse.x, 
-            mouse.y, 
-            mouse.w * .9, 
-            mouse.h * .9,            
+            arr[i].img, 
+            arr[i].w * arr[i].frameX, 
+            arr[i].h * arr[i].frameY, 
+            arr[i].w, 
+            arr[i].h, 
+            arr[i].x, 
+            arr[i].y, 
+            arr[i].w * 2, 
+            arr[i].h * 2,            
         )
-    })
-}
-
-let mouse1 = {
-    img: mouseImg, 
-    x: 500,
-    y: 580,
-    w: 48,
-    h: 48,
-    frameX: 0,
-    frameY: 1,
-    position: 0,
-    speed: 3
-}
-
-function collisionCheck(){
-
-    if(player.x === mouse1.x - 48){
-       mode = 2;
-       enterGame();
     }
 }
+
+
+// function collisionCheck(){
+
+//     if(player.x === mouse1.x - 48){
+//        mode = 2;
+//        enterGame();
+//     }
+// }
 
 
 
 
 function moveThatMouse(){
-    if(mouse1.frameX < 3){
-        mouse1.frameX ++
-        // mouse1.position --;
-    // }else{
-    //     mouse1.frameX = 
-        // mouse1.position --;
-    }
-    if(mouse1.x > -200){
-        mouse1.x -= mouse1.speed
-        mouse1.position --;
-    }
+    let arr = Object.values(mice);
     
+    for(let i = 0; i < arr.length; i++){
+        if(arr[i].frameX < 3){
+            arr[i].frameX ++
+            // arr[i].position --;
+        }else{
+            arr[i].frameX = 0;
+        }
+        if(arr[i].x > -200){
+            arr[i].x -= arr[i].speed
+            arr[i].position --;
+        }
+    }
 }
 
 
@@ -398,17 +461,17 @@ function animate() { //MAIN GAME
             player.h * .9,            
             )
 
-            drawMouse(
-                mouseImg,
-                mouse1.w * mouse1.frameX, 
-                mouse1.h * mouse1.frameY, 
-                mouse1.w, 
-                mouse1.h, 
-                mouse1.x, 
-                mouse1.y, 
-                mouse1.w*2, 
-                mouse1.h*2
-            )
+        // drawMouse(
+        //     mouseImg,
+        //     mouse1.w * mouse1.frameX, 
+        //     mouse1.h * mouse1.frameY, 
+        //     mouse1.w, 
+        //     mouse1.h, 
+        //     mouse1.x, 
+        //     mouse1.y, 
+        //     mouse1.w*2, 
+        //     mouse1.h*2
+        // )
 
         for(i = 0; i < particleArray.length; i ++){
             particleArray[i].update();
@@ -418,13 +481,13 @@ function animate() { //MAIN GAME
         // makeMice();
         makeHimWalk();
         applyGravity();
-        // drawMice();
+        drawMice();
         letHimRest();
         makeHimJump();
         resetOnStand();
         toggleRun();
-        // moveThatMouse();
-        collisionCheck();
+        moveThatMouse();
+        // collisionCheck();
     }
 }
 
