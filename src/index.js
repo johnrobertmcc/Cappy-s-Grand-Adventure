@@ -21,7 +21,7 @@ const keys = []
 
 const player = {
 
-    x: 11,
+    x: 10,
     y: 570,
     w: 140.5,
     h: 135,
@@ -30,7 +30,7 @@ const player = {
     speed: 5,
     moving: false,
     jumping: false,
-    position: -20,
+    position: -10,
     running: false,
     faceLeft: false
 }
@@ -264,8 +264,8 @@ function init(color){
 
 let mice = []; //a
 
-const mouse = new Image(); //a.1
-mouse.src = 'src/styles/images/mouse_sprite.png'
+const mouseImg = new Image(); //a.1
+mouseImg.src = 'src/styles/images/mouse_sprite.png'
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -277,7 +277,7 @@ function drawMouse(img, sX, sY, sW, sH, dX, dY, dW, dH){
 }
 
 //b
-function Mouse(img, x, y, w, h, fX, fY, speed){
+function Mouse(img, x, y, w, h, fX, fY, position, speed){
     this.img = img;
     this.x = x;
     this.y = y;
@@ -286,6 +286,7 @@ function Mouse(img, x, y, w, h, fX, fY, speed){
     this.fX = fX;
     this.fY = fY;
     this.speed = speed;
+    this.position = position;
 }
 
 
@@ -311,7 +312,7 @@ function drawMice(){
     return mice.forEach(mouse => {
 
         drawMouse(
-            mouse, 
+            mouse.img, 
             mouse.w * mouse.frameX, 
             mouse.h * mouse.frameY, 
             mouse.w, 
@@ -324,32 +325,43 @@ function drawMice(){
     })
 }
 
-// let mouse1 = new Mouse(  
-//     x: 500,
-//     y: 580,
-//     w: 48,
-//     h: 48,
-//     frameX: 0,
-//     frameY: 1,
-//     speed: 6
-// )
+let mouse1 = {
+    img: mouseImg, 
+    x: 500,
+    y: 580,
+    w: 48,
+    h: 48,
+    frameX: 0,
+    frameY: 1,
+    position: 0,
+    speed: 3
+}
+
+function collisionCheck(){
+
+    if(player.x === mouse1.x - 48){
+       mode = 2;
+       enterGame();
+    }
+}
 
 
 
 
-
-
-// function moveThatMouse(){
-//     if(mouseStuff.frameX < 3){
-//         mouseStuff.frameX ++
-//     }else{
-//         mouseStuff.frameX = 0
-//     }
-//     if(mouseStuff.x > -200){
-//         mouseStuff.x -= mouseStuff.speed
-//     }
+function moveThatMouse(){
+    if(mouse1.frameX < 3){
+        mouse1.frameX ++
+        // mouse1.position --;
+    // }else{
+    //     mouse1.frameX = 
+        // mouse1.position --;
+    }
+    if(mouse1.x > -200){
+        mouse1.x -= mouse1.speed
+        mouse1.position --;
+    }
     
-// }
+}
 
 
 let fps, fpsInterval, startTime, now, then, elapsed; //global variables
@@ -386,17 +398,17 @@ function animate() { //MAIN GAME
             player.h * .9,            
             )
 
-            // drawMouse(
-            //     mouse,
-            //     mouse1.w * mouse1.frameX, 
-            //     mouse1.h * mouse1.frameY, 
-            //     mouse1.w, 
-            //     mouse1.h, 
-            //     mouse1.x, 
-            //     mouse1.y, 
-            //     mouse1.w*2, 
-            //     mouse1.h*2
-            // )
+            drawMouse(
+                mouseImg,
+                mouse1.w * mouse1.frameX, 
+                mouse1.h * mouse1.frameY, 
+                mouse1.w, 
+                mouse1.h, 
+                mouse1.x, 
+                mouse1.y, 
+                mouse1.w*2, 
+                mouse1.h*2
+            )
 
         for(i = 0; i < particleArray.length; i ++){
             particleArray[i].update();
@@ -412,8 +424,10 @@ function animate() { //MAIN GAME
         resetOnStand();
         toggleRun();
         // moveThatMouse();
+        collisionCheck();
     }
 }
+
 
 
 //FOR START SCREEN
@@ -422,14 +436,16 @@ let mode = 0;
 function enterGame(){
     
     if(mode==0) {
-        init('white');
-    }
-    if(mode==1){ 
-        animation(20); 
+        // init('white');
+        init('rgba(255, 255, 255, 0.1)');
+    }else if(mode==1){ 
+        animation(18); 
         init('rgba(255, 255, 255, 0.1)');
         const audio = document.querySelector("audio");
         audio.volume = 0.2;
         audio.play();
+    }else if(mode ==2){
+        console.log("GameOver!")
     }
 }
 
