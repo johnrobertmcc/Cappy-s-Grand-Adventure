@@ -139,6 +139,10 @@ a:active { text-decoration: none; color:black }
     /* -webkit-filter: invert(100%); */
     /* filter: invert(100%); */
 }
+.angellist:hover{
+    text-decoration: none;
+    color: rgb(118, 83, 112);
+}
 .spotify:hover{
     text-decoration: none;
     color: rgb(29,208,93)
