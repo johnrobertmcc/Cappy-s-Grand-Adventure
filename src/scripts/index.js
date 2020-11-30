@@ -1,46 +1,31 @@
+//index.js
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-
 let limbo = document.getElementById('sound'); //ily Limbo
-
 canvas.height = 700;
 canvas.width = 1000;
 
+let fps, fpsInterval, startTime, now, then, elapsed; //global variables
+
+
+//backgrounds.js
 const first = new Image();
 first.src = 'src/styles/images/city.png'
-
 const second = new Image();
 second.src = 'src/styles/images/two.jpg'
-
 const backgrounds = [
     first,
     second
 ]
 
+function toggleText() {
+    document.getElementById("begin").className ='none';
+    document.getElementById("one").className ='temp';
+}
+
+//controller.js
 const keys = []
-
-const player = {
-
-    x: 10,
-    y: 570,
-    w: 140.5,
-    h: 135,
-    frameX: 0,
-    frameY: 0,
-    speed: 5,
-    moving: false,
-    jumping: false,
-    position: -10,
-    running: false,
-    faceLeft: false
-}
-
-const captain = new Image();
-captain.src = 'src/styles/images/captainv6.png';
-
-function drawCaptain(img, sX, sY, sW, sH, dX, dY, dW, dH){
-    ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
-}
 
 window.addEventListener('keydown', function(e){
     keys[e.keyCode] = true;
@@ -58,13 +43,6 @@ window.addEventListener('keyup', function(e){
     player.moving = false;
     player.running = false;
 });
-
-
-function toggleText() {
-    document.getElementById("begin").className ='none';
-    document.getElementById("one").className ='temp';
-}
-
 
 function moveThisLad(){
     //move right
@@ -215,7 +193,40 @@ function letHimRest() {
 }
 
 
-//FOR PARTICLE CANVAS
+
+
+//player.js
+
+const player = {
+
+    x: 10,
+    y: 570,
+    w: 140.5,
+    h: 135,
+    frameX: 0,
+    frameY: 0,
+    speed: 5,
+    moving: false,
+    jumping: false,
+    position: -10,
+    running: false,
+    faceLeft: false
+}
+
+const captain = new Image();
+captain.src = 'src/styles/images/captainv6.png';
+
+function drawCaptain(img, sX, sY, sW, sH, dX, dY, dW, dH){
+    ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
+}
+
+
+
+
+
+
+
+//particle.js
 function Particle(x, y, dX, dY, size, color){
     this.x = x;
     this.y = y;
@@ -261,7 +272,8 @@ function init(color){
     }
 }
 
- //a
+
+//mice.js
 
 const mouseImg = new Image(); //a.1
 mouseImg.src = 'src/styles/images/mouse_sprite.png'
@@ -479,22 +491,6 @@ function drawMice(){
     }
 }
 
-
-function collisionCheck(){
-
-    let arr = Object.values(mice)
-
-    for(let i = 0; i < arr.length; i++){
-        if(player.x === arr[i].x - 48){
-        mode = 2;
-        enterGame();
-        }
-    }
-}
-
-
-
-
 function moveThatMouse(){
     let arr = Object.values(mice);
     
@@ -513,9 +509,22 @@ function moveThatMouse(){
 }
 
 
-let fps, fpsInterval, startTime, now, then, elapsed; //global variables
 
 
+//collision.js
+function collisionCheck(){
+
+    let arr = Object.values(mice)
+
+    for(let i = 0; i < arr.length; i++){
+        if(player.x === arr[i].x - 48){
+        mode = 2;
+        enterGame();
+        }
+    }
+}
+
+//engine.js
 function animation(fps){
     
     fpsInterval = 1000/fps;
@@ -565,6 +574,8 @@ function animate() { //MAIN GAME
     }
 }
 
+
+//gameover.js
 const gO = new Image(); //a.1
 gO.src = 'src/styles/images/gameover.jpg'
 
