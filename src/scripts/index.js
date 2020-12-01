@@ -44,6 +44,8 @@ window.addEventListener('keyup', function(e){
     player.running = false;
 });
 
+
+
 function moveThisLad(){
     //move right
     
@@ -102,24 +104,6 @@ function moveThisLad(){
         player.y += 5
     }
 
-    //running and jumping
-    // if(player.running && player.jumping && player.y === 520 && !player.faceLeft){
-    //     player.frameX = 0;
-    //     player.frameY = 4;
-    //     player.h = 130;
-    //     player.y -= 70;
-    //     player.position -= player.speed * 2;
-    // }
-
-    // if(player.running && player.jumping && player.y === 520 && player.faceLeft){
-    //     player.frameX = 0;
-    //     player.frameY = 9;
-    //     player.h = 138;
-    //     player.y -= 72;
-    //     player.position += player.speed*2;
-    // }
-    
-
     //for sitting
     if(keys[40] && player.y === 575){
         player.frameY = 12;
@@ -133,6 +117,32 @@ function moveThisLad(){
         player.moving = false;   
         player.h = 134;
     }
+
+}
+
+function ohLordHeRunninNJumpin(){
+    if(player.running && player.jumping && player.y === 520 && !player.faceLeft){
+        player.frameX = 0;
+        player.frameY = 4;
+        player.h = 130;
+        player.y -= 65;
+    }
+
+    if(player.running && player.jumping && player.y === 520 && player.faceLeft){
+        player.frameX = 0;
+        player.frameY = 9;
+        player.h = 138;
+        player.y -= 68;
+    }
+
+    while(player.y > 575){
+        if(player.faceLeft){
+         player.position += player.speed*2;
+        }else{
+            player.position -= player.speed*2;
+        }
+    }
+    
 
 }
 
@@ -198,7 +208,6 @@ function letHimRest() {
 
 
 
-
 //player.js
 
 const player = {
@@ -223,10 +232,6 @@ captain.src = 'src/styles/images/captainv6.png';
 function drawCaptain(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
 }
-
-
-
-
 
 
 
@@ -579,6 +584,7 @@ function animate() { //MAIN GAME
         drawObstacle('white');
         makeHimWalk();
         applyGravity();
+        // ohLordHeRunninNJumpin();
         // drawMice();
         letHimRest();
         makeHimJump();
