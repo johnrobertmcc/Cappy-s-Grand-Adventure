@@ -42,7 +42,6 @@ window.addEventListener('keyup', function(e){
     delete keys[e.keyCode];
     player.moving = player.jumping ? true: false;
     player.running = false;
-    player.speed = 5;
 });
 
 function moveThisLad(){
@@ -56,8 +55,7 @@ function moveThisLad(){
     }
 
     if(player.y === 575 && keys[16] && keys[39]){
-        // player.position = player.position * 1.02;
-        player.speed = 10;
+        player.position -= player.speed * 1.5;
         player.frameY = 2;
         player.h = 130;
         player.running = true;
@@ -78,7 +76,7 @@ function moveThisLad(){
         // player.position = player.position * -1.02;
         player.frameY = 3;
         player.h = 125;
-        player.speed = 10;
+        player.position += player.speed * 1.5;
         player.running = true;
         player.faceLeft = true;
     }
@@ -103,6 +101,24 @@ function moveThisLad(){
         player.jumping = true;
         player.y += 5
     }
+
+    //running and jumping
+    // if(player.running && player.jumping && player.y === 520 && !player.faceLeft){
+    //     player.frameX = 0;
+    //     player.frameY = 4;
+    //     player.h = 130;
+    //     player.y -= 70;
+    //     player.position -= player.speed * 2;
+    // }
+
+    // if(player.running && player.jumping && player.y === 520 && player.faceLeft){
+    //     player.frameX = 0;
+    //     player.frameY = 9;
+    //     player.h = 138;
+    //     player.y -= 72;
+    //     player.position += player.speed*2;
+    // }
+    
 
     //for sitting
     if(keys[40] && player.y === 575){
@@ -193,7 +209,7 @@ const player = {
     h: 135,
     frameX: 0,
     frameY: 0,
-    speed: 5,
+    speed: 4,
     moving: false,
     jumping: false,
     position: -10,
