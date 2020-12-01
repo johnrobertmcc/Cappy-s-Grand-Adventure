@@ -1,12 +1,11 @@
 //index.js
 
+let fps, fpsInterval, startTime, now, then, elapsed; //global variables
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let limbo = document.getElementById('sound'); //ily Limbo
 canvas.height = 700;
 canvas.width = 1000;
-
-let fps, fpsInterval, startTime, now, then, elapsed; //global variables
 
 
 //backgrounds.js
@@ -40,11 +39,10 @@ window.addEventListener('keydown', function(e){
 
 window.addEventListener('keyup', function(e){
     delete keys[e.keyCode];
-    player.moving = player.jumping ? true: false;
+     player.moving = player.jumping ? true: false;
     player.running = false;
+
 });
-
-
 
 function moveThisLad(){
     //move right
@@ -69,7 +67,7 @@ function moveThisLad(){
     if(keys[37]) {
         player.moving = true;
         player.frameY = player.jumping ? 9 : 1;;
-        player.h = player.jumping ? 138 : 125;
+        player.h = player.jumping && !player.faceLeft ? 138 : 125;
         player.position += player.speed;
         player.faceLeft = true;
 
@@ -84,24 +82,25 @@ function moveThisLad(){
     }
 
     //jumping
-    if(keys[38] && player.y === 575 && !player.faceLeft){
+    if(keys[38] && !player.faceLeft && !player.jumping){
         player.frameX = 0;
         player.frameY = 4;
+        player.yVel -= 60
         player.h = 130
-        player.y -= 60
         player.jumping = true;
     }
-    if(keys[38] && player.y === 575 && player.faceLeft){
+    if(keys[38] && !player.jumping && player.faceLeft){
+        player.h = 125
         player.frameX = 0;
         player.frameY = 9;
-        player.h = 138
-        player.y -= 65
+        player.yVel -= 60
         player.jumping = true;
     }
+
+    
     if(player.y !== 575){
         player.moving = false;
         player.jumping = true;
-        player.y += 5
     }
 
     //for sitting
@@ -120,31 +119,35 @@ function moveThisLad(){
 
 }
 
-function ohLordHeRunninNJumpin(){
-    if(player.running && player.jumping && player.y === 520 && !player.faceLeft){
-        player.frameX = 0;
-        player.frameY = 4;
-        player.h = 130;
-        player.y -= 65;
-    }
+// function ohLordHeRunninNJumpin(){
+//     if(player.running && player.jumping && !player.faceLeft){
+//         player.frameX = 0;
+//         player.frameY = 4;
+//         player.yVel += 5;
+//         player.xVel += 5;
+//         player.y += player.yVel;
+//         player.yVel *= 0.9;
+//         // player.position += player.xVal;
+//         // player.xVal *= 0.9
+//     }
 
-    if(player.running && player.jumping && player.y === 520 && player.faceLeft){
-        player.frameX = 0;
-        player.frameY = 9;
-        player.h = 138;
-        player.y -= 68;
-    }
+//     // if(player.running && player.jumping && player.y === 520 && player.faceLeft){
+//     //     player.frameX = 0;
+//     //     player.frameY = 9;
+//     //     player.h = 138;
+//     //     player.y -= 68;
+//     // }
 
-    while(player.y > 575){
-        if(player.faceLeft){
-         player.position += player.speed*2;
-        }else{
-            player.position -= player.speed*2;
-        }
-    }
+//     // while(player.y > 575){
+//     //     if(player.faceLeft){
+//     //      player.position += player.speed*2;
+//     //     }else{
+//     //         player.position -= player.speed*2;
+//     //     }
+//     // }
     
 
-}
+// }
 
 function toggleRun(){
     if(player.moving === true){
@@ -155,13 +158,14 @@ function toggleRun(){
 }
 
 function applyGravity(){
-    while(player.y > 602){
-        player.y += 10;
-        player.frameX = 0;
-        player.frameY = 0;
+    if(player.jumping){
+      player.yVel += 5;
+      player.y += player.yVel;
+      player.yVel *= 0.9;
     }
-    if(player.y === 575){
-        player.jumping = false
+    if(player.y > 575){
+      player.y = 575;
+      player.jumping = false
     }
 }
 
@@ -207,9 +211,7 @@ function letHimRest() {
 }
 
 
-
 //player.js
-
 const player = {
 
     x: 300,
@@ -219,9 +221,11 @@ const player = {
     frameX: 0,
     frameY: 0,
     speed: 4,
+    xVel: 0,
+    yVel: 0,
     moving: false,
     jumping: false,
-    position: -10,
+    position: 0,
     running: false,
     faceLeft: false
 }
@@ -232,7 +236,6 @@ captain.src = 'src/styles/images/captainv6.png';
 function drawCaptain(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
 }
-
 
 
 //particle.js
@@ -283,19 +286,16 @@ function init(color){
 
 
 //mice.js
-
 const mouseImg = new Image(); //a.1
 mouseImg.src = 'src/styles/images/mouse_sprite.png'
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
-
 //c
 function drawMouse(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
 }
-
 //b
 function Mouse(img, x, y, w, h, fX, fY, position, speed){
     this.img = img;
@@ -308,8 +308,6 @@ function Mouse(img, x, y, w, h, fX, fY, position, speed){
     this.speed = speed;
     this.position = position;
 }
-
-
 const mice = {
     mouse1 : {
         img: mouseImg, 
@@ -478,7 +476,6 @@ const mice = {
     },
 
 }
-
 function drawMice(){
 
     // debugger
@@ -499,7 +496,6 @@ function drawMice(){
         )
     }
 }
-
 function moveThatMouse(){
     let arr = Object.values(mice);
     
@@ -510,34 +506,45 @@ function moveThatMouse(){
         }else{
             arr[i].frameX = 0;
         }
-        if(arr[i].x > -200){
+        // if(arr[i].x > -200){
             arr[i].x -= arr[i].speed;
-            arr[i].position --;
+            arr[i].x --;
         }
     }
-}
+
+
 
 
 //obstacles.js
-
-function drawObstacle(color, shape){
-        ctx.beginPath();
-        ctx.rect(575,575,150,100);
-        ctx.fillStyle = 'white';
-        ctx.stroke();
-}
+// function drawObstacle(img, sX, sY, sW, sH, dX, dY, dW, dH){
+//     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
+// }
 
 
 //collision.js
+
+function collision(player, obstacle) {
+  
+  if (player.x + player.w == obstacle.x &&
+      obstacle.y == player.y + player.h) {
+        debugger
+        console.log('hit');
+  } else {
+    return false;
+  }
+};
+
 function collisionCheck(){
 
     let arr = Object.values(mice)
 
     for(let i = 0; i < arr.length; i++){
-        if(player.x === arr[i].x - 48){
-        mode = 2;
-        enterGame();
-        }
+        // if(collision(player, arr[i])){
+        // mode = 2;
+        // enterGame();
+        // }
+
+        collision(player, arr[i])
     }
 }
 
@@ -574,6 +581,8 @@ function animate() { //MAIN GAME
             player.h * .9,            
             )
 
+          // drawObstacle(ctx.fillRect(700,600,150,100))
+
         for(let i = 0; i < particleArray.length; i ++){
             particleArray[i].update();
         }
@@ -581,17 +590,19 @@ function animate() { //MAIN GAME
       
         
         moveThisLad();
-        drawObstacle('white');
+        // drawObstacle('white');
         makeHimWalk();
         applyGravity();
         // ohLordHeRunninNJumpin();
-        // drawMice();
+        drawMice();
         letHimRest();
         makeHimJump();
         resetOnStand();
         toggleRun();
-        // moveThatMouse();
-        // collisionCheck();
+        moveThatMouse();
+
+        collisionCheck();
+
     }
 }
 
@@ -619,7 +630,7 @@ function enterGame(){
         init('rgba(255, 255, 255, 0.1)');
         const audio = document.querySelector("audio");
         audio.volume = 0.2;
-        // audio.play();
+        audio.play();
     }else if(mode == 2){
         gameOver();
         
@@ -627,6 +638,7 @@ function enterGame(){
 }
 
 enterGame();
+
 
 
 
