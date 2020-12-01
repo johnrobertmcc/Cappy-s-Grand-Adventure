@@ -42,24 +42,19 @@ window.addEventListener('keyup', function(e){
     delete keys[e.keyCode];
     player.moving = false;
     player.running = false;
+    player.speed = 5;
 });
 
 function moveThisLad(){
     //move right
     
-    if(keys[39] && player.x < 300) {
-        player.x += 5
+    if(keys[39]) {
         player.frameY = 0;
         player.position -= player.speed;
         player.moving = true;
         player.faceLeft = false;
     }
 
-    if(keys[39] && player.x >=300) {
-        player.moving = true;
-        player.position -= 5;
-        player.faceLeft = false;
-    }
     if(player.y === 575 && keys[16] && keys[39]){
         // player.position = player.position * 1.02;
         player.speed = 10;
@@ -71,9 +66,7 @@ function moveThisLad(){
 
 
     //move left
-    if(keys[37] && player.x > 0) {
-        //left facing x0-3 y 1
-        // player.position += 5
+    if(keys[37]) {
         player.moving = true;
         player.frameY = 1;
         player.h = 125;
@@ -81,15 +74,11 @@ function moveThisLad(){
         player.faceLeft = true;
 
     }
-    if(keys[37] && player.x >= -10) {
-        player.moving = true;
-         player.faceLeft = true;
-        // player.position += 5;
-    }
     if(player.y === 575 && keys[16] && keys[37]){
         // player.position = player.position * -1.02;
         player.frameY = 3;
         player.h = 125;
+        player.speed = 10;
         player.running = true;
         player.faceLeft = true;
     }
