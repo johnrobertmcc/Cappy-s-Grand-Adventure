@@ -40,7 +40,7 @@ window.addEventListener('keydown', function(e){
 
 window.addEventListener('keyup', function(e){
     delete keys[e.keyCode];
-    player.moving = false;
+    player.moving = player.jumping ? true: false;
     player.running = false;
     player.speed = 5;
 });
@@ -49,7 +49,7 @@ function moveThisLad(){
     //move right
     
     if(keys[39]) {
-        player.frameY = 0;
+        player.frameY = player.jumping ? 4 : 0;
         player.position -= player.speed;
         player.moving = true;
         player.faceLeft = false;
@@ -68,8 +68,8 @@ function moveThisLad(){
     //move left
     if(keys[37]) {
         player.moving = true;
-        player.frameY = 1;
-        player.h = 125;
+        player.frameY = player.jumping ? 9 : 1;;
+        player.h = player.jumping ? 138 : 125;
         player.position += player.speed;
         player.faceLeft = true;
 
@@ -88,15 +88,14 @@ function moveThisLad(){
         player.frameX = 0;
         player.frameY = 4;
         player.h = 130
-        player.y -= 50
-        // player.position += 10
+        player.y -= 60
         player.jumping = true;
     }
     if(keys[38] && player.y === 575 && player.faceLeft){
         player.frameX = 0;
         player.frameY = 9;
-         player.h = 138
-        player.y -= 50
+        player.h = 138
+        player.y -= 65
         player.jumping = true;
     }
     if(player.y !== 575){
