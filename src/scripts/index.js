@@ -3,7 +3,7 @@
 let fps, fpsInterval, startTime, now, then, elapsed; //global variables
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-let limbo = document.getElementById('sound'); //ily Limbo
+let limbo = document.getElementById('sound').loop; //ily Limbo
 canvas.height = 700;
 canvas.width = 1000;
 
@@ -39,7 +39,7 @@ window.addEventListener('keydown', function(e){
 
 window.addEventListener('keyup', function(e){
     delete keys[e.keyCode];
-     player.moving = player.jumping ? true: false;
+    player.moving = player.jumping ? true: false;
     player.running = false;
 
 });
@@ -318,7 +318,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 3,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 0
     },
     mouse2 : {
@@ -330,7 +330,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 6,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 1
     },
     mouse3 : {
@@ -342,7 +342,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 8,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 2
     },
     mouse4 : {
@@ -354,7 +354,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 6,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 3
     },
     mouse5 : {
@@ -366,7 +366,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 9,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 4
     },
     mouse6 : {
@@ -378,7 +378,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 10,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 5
     },
     mouse7 : {
@@ -390,7 +390,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 6,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 5
     },
     mouse8 : {
@@ -402,19 +402,19 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 9,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 6
     },
     mouse9 : {
         img: mouseImg, 
-        x: 40000,
+        x: 400,
         y: 580,
         w: 48,
         h: 48,
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 10,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 7
     },
     mouse10 : {
@@ -426,7 +426,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 6,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 7
     },
     mouse11 : {
@@ -438,7 +438,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 8,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 8
     },
     mouse12 : {
@@ -450,7 +450,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 5,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 9
     },
     mouse13 : {
@@ -462,7 +462,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 5,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 10
     },
     mouse14 : {
@@ -474,7 +474,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 6,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 11
     },
     mouse15 : {
@@ -486,7 +486,7 @@ const mice = {
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: 6,
+        speed: player.moving ? player.speed + 6 : 6,
         id: 12
     },
 
@@ -521,7 +521,7 @@ function moveThatMouse(){
         }else{
             arr[i].frameX = 0;
         }
-            arr[i].x -= arr[i].speed;
+            arr[i].x -= arr[i].speed + player.speed;
             arr[i].x --;
         }
   }
@@ -529,22 +529,26 @@ function moveThatMouse(){
 
 
 
-//obstacles.js
-// function drawObstacle(img, sX, sY, sW, sH, dX, dY, dW, dH){
-//     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
-// }
+//score.js
+let score = 0;
 
+function drawScore() {
+    ctx.font = "20px Monospace";
+    ctx.fillStyle = "#000000";
+    ctx.fillText("Rats Killed: "+score, 8, 20);
+}
 
 //collision.js
 
-function collision(rect1, rect2) {
+function collision(cappy, mouse) {
   
-  if (rect1.x < rect2.x + rect2.w &&
-   rect1.x + rect1.w > rect2.x &&
-   rect1.y < rect2.y + rect2.h &&
-   rect1.y + rect1.h > rect2.y &&
+  if (cappy.x < mouse.x + mouse.w &&
+   cappy.x + cappy.w > mouse.x &&
+   cappy.y < mouse.y + mouse.h &&
+   cappy.y + cappy.h > mouse.y &&
    !player.jumping) {
-     return true
+    //  score += 1
+    return true
 }
 };
 
@@ -559,7 +563,7 @@ function collisionCheck(){
         // }
 
         if(collision(player, arr[i])){
-          delete arr[i]
+          score +=1
         }
     }
 }
@@ -597,7 +601,6 @@ function animate() {
             player.h * .9,            
             )
 
-          // drawObstacle(ctx.fillRect(700,600,150,100))
 
         for(let i = 0; i < particleArray.length; i ++){
             particleArray[i].update();
@@ -615,7 +618,7 @@ function animate() {
         resetOnStand();
         toggleRun();
         moveThatMouse();
-
+        drawScore();
         collisionCheck();
 
     }
