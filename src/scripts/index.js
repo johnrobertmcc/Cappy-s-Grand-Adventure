@@ -1,9 +1,10 @@
 //index.js
-
 let fps, fpsInterval, startTime, now, then, elapsed; //global variables
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-let limbo = document.getElementById('sound').loop; //ily Limbo
+// let limbo = document.getElementById('sound').loop; //ily Limbo
+const audio = document.querySelector("audio");
+// let death = document.getElementById('death');
 canvas.height = 700;
 canvas.width = 1000;
 
@@ -20,7 +21,7 @@ const backgrounds = [
 
 function toggleText() {
     document.getElementById("begin").className ='none';
-    document.getElementById("one").className ='temp';
+    // document.getElementById("one").className ='temp';
 }
 
 //controller.js
@@ -216,11 +217,11 @@ const player = {
 
     x: 300,
     y: 570,
-    w: 140.5,
+    w: 141,
     h: 135,
     frameX: 0,
     frameY: 0,
-    speed: 4,
+    speed: 5,
     xVel: 0,
     yVel: 0,
     moving: false,
@@ -286,248 +287,73 @@ function init(color){
 
 
 //mice.js
-const mouseImg = new Image(); //a.1
+const mouseImg = new Image();
 mouseImg.src = 'src/styles/images/mouse_sprite.png'
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-//c
 function drawMouse(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
 }
-//b
-function Mouse(img, x, y, w, h, fX, fY, position, speed){
-    this.img = img;
-    this.x = x;
-    this.y = y;
-    this.h = h;
-    this.w = w;
-    this.fX = fX;
-    this.fY = fY;
-    this.speed = speed;
-    this.position = position;
-}
-const mice = {
-    mouse1 : {
+
+const mice = [];
+
+function generateMouse(name){
+     return (name = {
         img: mouseImg, 
-        x: 500,
+        x: getRandomInt(900, 5000),
         y: 580,
         w: 48,
         h: 48,
         frameX: 0,
         frameY: 1,
         position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 0
-    },
-    mouse2 : {
-        img: mouseImg, 
-        x: 1100,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 1
-    },
-    mouse3 : {
-        img: mouseImg, 
-        x: 3000,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 2
-    },
-    mouse4 : {
-        img: mouseImg, 
-        x: 2000,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 3
-    },
-    mouse5 : {
-        img: mouseImg, 
-        x: 1500,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 4
-    },
-    mouse6 : {
-        img: mouseImg, 
-        x: 2500,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 5
-    },
-    mouse7 : {
-        img: mouseImg, 
-        x: 6000,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 5
-    },
-    mouse8 : {
-        img: mouseImg, 
-        x: 7100,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 6
-    },
-    mouse9 : {
-        img: mouseImg, 
-        x: 400,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 7
-    },
-    mouse10 : {
-        img: mouseImg, 
-        x: 2800,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 7
-    },
-    mouse11 : {
-        img: mouseImg, 
-        x: 1570,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 8
-    },
-    mouse12 : {
-        img: mouseImg, 
-        x: 1500,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 9
-    },
-    mouse13 : {
-        img: mouseImg, 
-        x: 2000,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 10
-    },
-    mouse14 : {
-        img: mouseImg, 
-        x: 1900,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 11
-    },
-    mouse15 : {
-        img: mouseImg, 
-        x: 2500,
-        y: 580,
-        w: 48,
-        h: 48,
-        frameX: 0,
-        frameY: 1,
-        position: 0,
-        speed: player.moving ? player.speed + 6 : 6,
-        id: 12
-    },
+        speed: getRandomInt(5, 12),
+        dead: false
+    })
 
 }
-function drawMice(){
 
-    // debugger
-    let arr = Object.values(mice)
-
-    for(let i = 0; i < arr.length; i++){
-
-        drawMouse(
-            arr[i].img, 
-            arr[i].w * arr[i].frameX, 
-            arr[i].h * arr[i].frameY, 
-            arr[i].w, 
-            arr[i].h, 
-            arr[i].x, 
-            arr[i].y, 
-            arr[i].w * 2, 
-            arr[i].h * 2,            
-        )
+function generateMice(num){
+    for(let i = 0; i < num; i++){
+        mice.push(generateMouse(i))
     }
 }
+
+function drawMice(){
+
+    for(let i = 0; i < mice.length; i++){
+
+        if(!mice[i].dead){
+            drawMouse(
+                mice[i].img, 
+                mice[i].w * mice[i].frameX, 
+                mice[i].h * mice[i].frameY, 
+                mice[i].w, 
+                mice[i].h, 
+                mice[i].x, 
+                mice[i].y, 
+                mice[i].w * 2, 
+                mice[i].h * 2,            
+            )
+        }
+    }
+}
+
 function moveThatMouse(){
-    let arr = Object.values(mice);
     
-    for(let i = 0; i < arr.length; i++){
-        if(arr[i].frameX < 3){
-            arr[i].frameX ++
-            // arr[i].position --;
+    for(let i = 0; i < mice.length; i++){
+        if(mice[i].frameX < 3){
+            mice[i].frameX ++
+            // mice[i].position --;
         }else{
-            arr[i].frameX = 0;
+            mice[i].frameX = 0;
         }
-            arr[i].x -= arr[i].speed + player.speed;
-            arr[i].x --;
+            mice[i].x -= player.faceLeft ? mice[i].speed - player.speed : mice[i].speed + player.speed
+            mice[i].x --;
         }
-  }
-
-
-
+}
 
 //score.js
 let score = 0;
@@ -542,28 +368,41 @@ function drawScore() {
 
 function collision(cappy, mouse) {
   
-  if (cappy.x < mouse.x + mouse.w &&
-   cappy.x + cappy.w > mouse.x &&
-   cappy.y < mouse.y + mouse.h &&
-   cappy.y + cappy.h > mouse.y &&
-   !player.jumping) {
-    //  score += 1
-    return true
-}
+    if (mouse.x > 290 && mouse.x < 320  && cappy.y > 550 && cappy.y < 575-mouse.h) {
+        return 'kill'
+    }else if(mouse.x > 290 && mouse.x < 310  && !player.jumping){
+        return 'dead';
+    }
 };
 
 function collisionCheck(){
 
-    let arr = Object.values(mice)
 
-    for(let i = 0; i < arr.length; i++){
-        // if(collision(player, arr[i])){
-        // mode = 2;
-        // enterGame();
-        // }
+    for(let i = 0; i < mice.length; i++){
 
-        if(collision(player, arr[i])){
-          score +=1
+        if(collision(player, mice[i]) == 'kill'){
+            score +=1;
+            death.volume = 0.1;
+            death.play();
+            // debugger
+            mice[i].dead = true;
+            // clearTheBodies();
+        }else if(collision(player, mice[i]) == 'dead'){
+            mode = 2;
+            rip.volume = 0.2;
+            audio.pause();
+            rip.play();
+            enterGame();
+            // console.log('dead')
+
+        }
+    }
+}
+
+function clearTheBodies(){
+    for(let i = 0; i < mice.length; i++){
+        if(mice[i].dead){
+            delete mice[i]
         }
     }
 }
@@ -644,9 +483,9 @@ function enterGame(){
         // init('white');
         init('rgba(255, 255, 255, 0.1)');
     }else if(mode==1){ 
+        generateMice(5);
         animation(18); 
         init('rgba(255, 255, 255, 0.1)');
-        const audio = document.querySelector("audio");
         audio.volume = 0.2;
         audio.play();
         player.moving = false;
