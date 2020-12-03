@@ -7,7 +7,7 @@ const audio = document.querySelector("audio");
 // let death = document.getElementById('death');
 canvas.height = 700;
 canvas.width = 1000;
-
+let gameBegun = false;
 
 //backgrounds.js
 const first = new Image();
@@ -31,9 +31,14 @@ window.addEventListener('keydown', function(e){
     keys[e.keyCode] = true;
     player.moving = true;
     if(keys[13]){
-        mode = 1;
-        enterGame();
-        toggleText();
+        if(!gameBegun){
+            mode = 1;
+            enterGame();
+            toggleText();
+            gameBegun = true;
+        }else if(gameBegun && mode == 2){
+           resetGame();
+        }
     }
 
 });
@@ -197,12 +202,12 @@ function makeHimWalk(){
 
 function makeHimJump() {
     if(player.frameX < 3 && player.frameY === 4){
-        player.frameX ++
-    }else if(player.jumping === true && player.y > 600) {
-        player.frameX ++;
-    }else if(player.moving === false && player.y <= 601){
-        player.jumping === false
-    }
+        player.frameX ++}
+    // }else if(player.jumping === true && player.y > 600) {
+    //     player.frameX ++;
+    // }else if(player.moving === false && player.y <= 601){
+    //     player.jumping === false
+    // }
 }
 
 function letHimRest() {
@@ -297,7 +302,7 @@ function drawMouse(img, sX, sY, sW, sH, dX, dY, dW, dH){
     ctx.drawImage(img, sX, sY, sW, sH, dX, dY, dW, dH)
 }
 
-const mice = [];
+let mice = [];
 
 function generateMouse(name){
      return (name = {
@@ -360,17 +365,28 @@ let score = 0;
 
 function drawScore() {
     ctx.font = "20px Monospace";
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#F8F8FF";
     ctx.fillText("Rats Killed: "+score, 8, 20);
+}
+
+function scoreCheck(){
+    let temp = [];
+    for(let i = 0; i < mice.length; i++){
+        if(mice[i].dead && !temp.includes(mice[i])){
+            temp.push(mice[i])
+        }
+    }
+
+    score = temp.length
 }
 
 //collision.js
 
 function collision(cappy, mouse) {
   
-    if (mouse.x > 290 && mouse.x < 320  && cappy.y > 550 && cappy.y < 575-mouse.h) {
+    if (mouse.x > 290 && mouse.x < 350  && cappy.y > 500 && cappy.y <= 574) {
         return 'kill'
-    }else if(mouse.x > 290 && mouse.x < 310  && !player.jumping){
+    }else if(mouse.x > 290 && mouse.x < 310  && cappy.y == 575 && !mouse.dead){
         return 'dead';
     }
 };
@@ -381,28 +397,15 @@ function collisionCheck(){
     for(let i = 0; i < mice.length; i++){
 
         if(collision(player, mice[i]) == 'kill'){
-            score +=1;
             death.volume = 0.1;
             death.play();
-            // debugger
             mice[i].dead = true;
-            // clearTheBodies();
         }else if(collision(player, mice[i]) == 'dead'){
             mode = 2;
             rip.volume = 0.2;
             audio.pause();
             rip.play();
             enterGame();
-            // console.log('dead')
-
-        }
-    }
-}
-
-function clearTheBodies(){
-    for(let i = 0; i < mice.length; i++){
-        if(mice[i].dead){
-            delete mice[i]
         }
     }
 }
@@ -451,6 +454,7 @@ function animate() {
         makeHimWalk();
         applyGravity();
         // ohLordHeRunninNJumpin();
+        scoreCheck();
         drawMice();
         letHimRest();
         makeHimJump();
@@ -466,7 +470,7 @@ function animate() {
 
 //gameover.js
 const gO = new Image(); //a.1
-gO.src = 'src/styles/images/gameover.jpg'
+gO.src = 'src/styles/images/game_over.png'
 
 function gameOver(){
     ctx.drawImage(gO, 0, 0, canvas.width, canvas.height);
@@ -483,8 +487,9 @@ function enterGame(){
         // init('white');
         init('rgba(255, 255, 255, 0.1)');
     }else if(mode==1){ 
-        generateMice(5);
+        // generateMice(20);
         animation(18); 
+        debugger
         init('rgba(255, 255, 255, 0.1)');
         audio.volume = 0.2;
         audio.play();
@@ -493,6 +498,16 @@ function enterGame(){
         gameOver();
         
     }
+}
+
+function resetGame(){
+    gameBegun = false;
+    mice = [];
+    score = 0;
+    debugger
+    mode = 0;
+    player.position = 0;
+    enterGame();
 }
 
 enterGame();

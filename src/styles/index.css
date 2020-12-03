@@ -34,10 +34,6 @@
     justify-content: space-between;
     flex-direction: column;
 }
-/* 
-.left-side> h3 {
-  padding: 15px;
-} */
 
 .right-side> h3 {
     margin-top: 100px;
@@ -74,12 +70,17 @@
 
 }
 .background{
+
     display: flex;
     justify-content: center;
-    background: #702995;
-    background: -webkit-linear-gradient(top left, #702995, #225238));
-    background: -moz-linear-gradient(top left, #702995, #225238));
-    background: linear-gradient(to bottom right, #702995, #225238);
+    background-color:black;
+    background-image:
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+    radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px; 
+    background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
   
 }
 .title{
@@ -93,15 +94,9 @@
 
 #begin{
     margin-top: 300px;
+    color:white;
 }
 
-/* #background-canvas{
-    -webkit-box-shadow: -23px 200px 161px 82px rgba(0,0,0,0.07);
-    -moz-box-shadow: -23px 200px 161px 82px rgba(0,0,0,0.07);
-    box-shadow: -23px 200px 161px 82px rgba(0,0,0,0.07);
-    width: 1000px;
-    height: 700px;
-} */
 body{
     overflow: none;
     background-color: ghostwhite;
@@ -136,8 +131,6 @@ a:active { text-decoration: none; color:black }
 .github:hover{
     text-decoration: none;
     color: rgb(116, 12, 12);
-    /* -webkit-filter: invert(100%); */
-    /* filter: invert(100%); */
 }
 .angellist:hover{
     text-decoration: none;
@@ -157,18 +150,14 @@ a:active { text-decoration: none; color:black }
     display: none
 }
 
-.temp{
-    /* display: none */
-}
-
-#one{
-    /* display:none */
-}
-
 .owner{
     display:block;
 }
 
 .me:hover{
     color: rgb(46, 191, 118);
+}
+
+.fancy{
+    color: white;
 }
