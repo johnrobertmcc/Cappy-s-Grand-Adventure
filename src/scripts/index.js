@@ -8,6 +8,7 @@ const audio = document.querySelector("audio");
 canvas.height = 700;
 canvas.width = 1000;
 let gameBegun = false;
+let difficulty = 2;
 
 //backgrounds.js
 const first = new Image();
@@ -24,19 +25,35 @@ function toggleText() {
     // document.getElementById("one").className ='temp';
 }
 
+// difficulty.js
+
+function addDifficulty(key){
+    switch (key) {
+        case 'easy':
+            difficulty = 10;
+        case 'med':
+            difficulty = 50;
+        case 'hard':
+            difficulty = 100;
+        default:
+            difficulty = 50;
+    }
+}
+
 //controller.js
 const keys = []
 
 window.addEventListener('keydown', function(e){
+    e.preventDefault();
     keys[e.keyCode] = true;
-    player.moving = true;
+    // player.moving = true;
     if(keys[13]){
         if(!gameBegun){
             mode = 1;
             enterGame();
             toggleText();
             gameBegun = true;
-        }else if(gameBegun && mode == 2){
+        }else if(gameBegun && mode == 2 || mode == 3 || mode ==4){
            resetGame();
         }
     }
@@ -44,6 +61,7 @@ window.addEventListener('keydown', function(e){
 });
 
 window.addEventListener('keyup', function(e){
+    e.preventDefault();
     delete keys[e.keyCode];
     player.moving = player.jumping ? true: false;
     player.running = false;
@@ -53,11 +71,12 @@ window.addEventListener('keyup', function(e){
 function moveThisLad(){
     //move right
     
-    if(keys[39]) {
+    if(keys[39] && !keys[37]) {
         player.frameY = player.jumping ? 4 : 0;
         player.position -= player.speed;
         player.moving = true;
         player.faceLeft = false;
+        player.h = player.jumping && player.faceLeft ? 138 : 125;
     }
 
     if(player.y === 575 && keys[16] && keys[39]){
@@ -70,16 +89,15 @@ function moveThisLad(){
 
 
     //move left
-    if(keys[37]) {
+    if(keys[37] && !keys[39]) {
         player.moving = true;
         player.frameY = player.jumping ? 9 : 1;;
-        player.h = player.jumping && !player.faceLeft ? 138 : 125;
+        player.h = player.jumping && player.faceLeft ? 138 : 125;
         player.position += player.speed;
         player.faceLeft = true;
 
     }
     if(player.y === 575 && keys[16] && keys[37]){
-        // player.position = player.position * -1.02;
         player.frameY = 3;
         player.h = 125;
         player.position += player.speed * 1.5;
@@ -96,7 +114,7 @@ function moveThisLad(){
         player.jumping = true;
     }
     if(keys[38] && !player.jumping && player.faceLeft){
-        player.h = 125
+        player.h = 138
         player.frameX = 0;
         player.frameY = 9;
         player.yVel -= 60
@@ -122,6 +140,10 @@ function moveThisLad(){
         player.moving = false;   
         player.h = 134;
     }
+
+}
+
+function stayInFrame(){
 
 }
 
@@ -351,17 +373,17 @@ function moveThatMouse(){
     for(let i = 0; i < mice.length; i++){
         if(mice[i].frameX < 3){
             mice[i].frameX ++
-            // mice[i].position --;
         }else{
             mice[i].frameX = 0;
         }
-            mice[i].x -= player.faceLeft ? mice[i].speed - player.speed : mice[i].speed + player.speed
+            mice[i].x -= (player.moving || player.jumping) && !player.faceLeft ? mice[i].speed + player.speed : mice[i].speed;
             mice[i].x --;
         }
 }
 
 //score.js
 let score = 0;
+let escaped;
 
 function drawScore() {
     ctx.font = "20px Monospace";
@@ -371,13 +393,30 @@ function drawScore() {
 
 function scoreCheck(){
     let temp = [];
+    let outOfBounds = [];
+
     for(let i = 0; i < mice.length; i++){
         if(mice[i].dead && !temp.includes(mice[i])){
             temp.push(mice[i])
         }
+        if(mice[i].x < 0 && !mice[i].dead){
+            outOfBounds.push(mice[i]);
+        }
     }
 
-    score = temp.length
+    score = temp.length;
+
+    if(score == mice.length){
+        mode = 3;
+        enterGame();
+    }
+
+    escaped = difficulty - temp.length;
+
+    if(escaped == outOfBounds.length && escaped > 0){
+        mode = 4;
+        enterGame();
+    }
 }
 
 //collision.js
@@ -452,6 +491,7 @@ function animate() {
         
         moveThisLad();
         makeHimWalk();
+        makeHimJump();
         applyGravity();
         // ohLordHeRunninNJumpin();
         scoreCheck();
@@ -472,9 +512,36 @@ function animate() {
 const gO = new Image(); //a.1
 gO.src = 'src/styles/images/game_over.png'
 
-function gameOver(){
-    ctx.drawImage(gO, 0, 0, canvas.width, canvas.height);
-    animation(0)
+function gameOver(result){
+    switch (result) {
+        case 'lose':
+            ctx.drawImage(gO, 0, 0, canvas.width, canvas.height);
+            animation(0);    
+            break;   
+        case 'won':
+            ctx.font = "20px Monospace";
+            ctx.fillStyle = "#F8F8FF";
+            ctx.fillText("Great job, you've killed all the rats!", 200, 200);
+            animation(0);
+            break;
+    
+        case 'gone':
+            ctx.font = "20px Monospace";
+            ctx.fillStyle = "#F8F8FF";
+            ctx.fillText("Oh no! " +escaped + " rats got away!" , 200, 200);
+            animation(0);
+            break;
+
+        default:
+            break;
+    }
+}
+
+function won(){
+    ctx.font = "20px Monospace";
+    ctx.fillStyle = "#F8F8FF";
+    ctx.fillText("Great job, you've killed all the rats! Try again next time.", 200, 300);
+
 }
 
 
@@ -487,16 +554,18 @@ function enterGame(){
         // init('white');
         init('rgba(255, 255, 255, 0.1)');
     }else if(mode==1){ 
-        // generateMice(20);
+        generateMice(difficulty);
         animation(18); 
-        debugger
         init('rgba(255, 255, 255, 0.1)');
         audio.volume = 0.2;
         audio.play();
         player.moving = false;
     }else if(mode == 2){
-        gameOver();
-        
+        gameOver('lose');
+    }else if(mode == 3 ){
+        gameOver('won')
+    }else if(mode == 4){
+        gameOver('gone')
     }
 }
 
@@ -504,10 +573,10 @@ function resetGame(){
     gameBegun = false;
     mice = [];
     score = 0;
-    debugger
+    audio.currentTime = 0;
     mode = 0;
     player.position = 0;
     enterGame();
 }
-
+// addDifficulty()
 enterGame();
