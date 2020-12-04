@@ -145,6 +145,7 @@ function moveThisLad(){
 
 function stayInFrame(){
 
+    // if(player.position)
 }
 
 // function ohLordHeRunninNJumpin(){
