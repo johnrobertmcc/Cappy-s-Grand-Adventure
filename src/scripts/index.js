@@ -8,7 +8,7 @@ const audio = document.querySelector("audio");
 canvas.height = 700;
 canvas.width = 1000;
 let gameBegun = false;
-let difficulty = 50;
+let difficulty = 70;
 
 //backgrounds.js
 const first = new Image();
@@ -142,10 +142,21 @@ function moveThisLad(){
     }
 
 }
+let inFrame = true;
 
 function stayInFrame(){
+        if(player.position <= 0){
+            inFrame = false;
+            ctx.drawImage(first, player.position, 0, first.width, canvas.height);
+        }else if(player.position > 0){
+            ctx.drawImage(first, 0, 0, first.width, canvas.height);
+            inFrame = true;
+        }else if(PaymentRequest.position < -2000){
+            inFrame = false;
+            ctx.drawImage(first, -2000, 0, first.width, canvas.height);
+        }
 
-    // if(player.position)
+  
 }
 
 // function ohLordHeRunninNJumpin(){
@@ -187,7 +198,7 @@ function toggleRun(){
 }
 
 function applyGravity(){
-    if(player.jumping){
+    if(player.jumping|| player.y < 520){
       player.yVel += 5;
       player.y += player.yVel;
       player.yVel *= 0.9;
@@ -377,8 +388,17 @@ function moveThatMouse(){
         }else{
             mice[i].frameX = 0;
         }
-            mice[i].x -= (player.moving || player.jumping) && !player.faceLeft ? mice[i].speed + player.speed : mice[i].speed;
-            mice[i].x --;
+
+        let mouseSpeed;
+
+        if((player.moving || player.jumping) && !player.faceLeft && inFrame){
+            mouseSpeed = (mice[i].speed + player.speed) * 1.3
+        }else if((player.moving || player.jumping) && player.faceLeft){
+            mouseSpeed = (mice[i].speed - player.speed) * 0.7
+        }else{
+            mouseSpeed = mice[i].speed
+        }
+            mice[i].x -= mouseSpeed;
         }
 }
 
@@ -389,6 +409,7 @@ let escaped;
 function drawScore() {
     ctx.font = "20px Monospace";
     ctx.fillStyle = "#F8F8FF";
+    ctx.textAlign = 'left'
     ctx.fillText("Rats Killed: "+score, 8, 20);
 }
 
@@ -469,8 +490,7 @@ function animate() {
 
         ctx.clearRect(0,0, canvas.width, canvas.height);
 
-        ctx.drawImage(first, player.position, 0, first.width, canvas.height);
-
+        stayInFrame();
         drawCaptain(
             captain, 
             player.w * player.frameX, 
@@ -515,7 +535,7 @@ backdrop.src = 'src/styles/images/backdrop.png'
 
 function gameOver(result){
     ctx.drawImage(backdrop, 0, 0, canvas.width, canvas.height);
-    animation(0);    
+    animation(18);    
 
     let x = canvas.width/2;
     let y = canvas.height/2;
@@ -578,7 +598,6 @@ function enterGame(){
     }else if(mode==1){ 
         generateMice(difficulty);
         animation(18); 
-        init('rgba(255, 255, 255, 0.1)');
         audio.volume = 0.2;
         audio.play();
         player.moving = false;
