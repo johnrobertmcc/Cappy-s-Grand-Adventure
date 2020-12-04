@@ -8,7 +8,7 @@ const audio = document.querySelector("audio");
 canvas.height = 700;
 canvas.width = 1000;
 let gameBegun = false;
-let difficulty = 2;
+let difficulty = 50;
 
 //backgrounds.js
 const first = new Image();
@@ -510,39 +510,60 @@ function animate() {
 
 
 //gameover.js
-const gO = new Image(); //a.1
-gO.src = 'src/styles/images/game_over.png'
+const backdrop = new Image(); //a.1
+backdrop.src = 'src/styles/images/backdrop.png'
 
 function gameOver(result){
+    ctx.drawImage(backdrop, 0, 0, canvas.width, canvas.height);
+    animation(0);    
+
+    let x = canvas.width/2;
+    let y = canvas.height/2;
     switch (result) {
         case 'lose':
-            ctx.drawImage(gO, 0, 0, canvas.width, canvas.height);
-            animation(0);    
+            ctx.font = "20px Monospace";
+            ctx.fillStyle = "#F8F8FF";
+            ctx.textAlign = 'center'
+            ctx.fillText("The rats got you.", x, y);
+            ctx.font = "15px Monospace";
+            ctx.fillStyle = "#F8F8FF";
+            ctx.textAlign = 'center'
+            ctx.fillText("press 'Enter' to restart", x, y+50);
+            ctx.font = "10px Monospace";
+            ctx.fillStyle = "#F8F8FF";
+            ctx.textAlign = 'center'
+            ctx.fillText("do better.", x, y+75);
+            animation(0);
             break;   
+
         case 'won':
             ctx.font = "20px Monospace";
             ctx.fillStyle = "#F8F8FF";
-            ctx.fillText("Great job, you've killed all the rats!", 200, 200);
+            ctx.textAlign = 'center'
+            ctx.fillText("Great job, you've killed all the rats!", x, y);
+            ctx.font = "15px Monospace";
+            ctx.fillStyle = "#F8F8FF";
+            ctx.textAlign = 'center'
+            ctx.fillText("press 'Enter' to restart", x, y+50);
             animation(0);
             break;
     
         case 'gone':
             ctx.font = "20px Monospace";
             ctx.fillStyle = "#F8F8FF";
-            ctx.fillText("Oh no! " +escaped + " rats got away!" , 200, 200);
+            ctx.textAlign = 'center'
+            ctx.fillText("You've survived, but " +escaped + " rats got away!" , x, y);
+            ctx.font = "15px Monospace";
+            ctx.fillStyle = "#F8F8FF";
+            ctx.textAlign = 'center'
+            ctx.fillText("press 'Enter' to restart", x, y+50);
+
             animation(0);
             break;
 
         default:
             break;
     }
-}
-
-function won(){
-    ctx.font = "20px Monospace";
-    ctx.fillStyle = "#F8F8FF";
-    ctx.fillText("Great job, you've killed all the rats! Try again next time.", 200, 300);
-
 }
 
 
