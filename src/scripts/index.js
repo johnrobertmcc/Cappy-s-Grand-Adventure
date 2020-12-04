@@ -147,13 +147,14 @@ let inFrame = true;
 function stayInFrame(){
         if(player.position <= 0){
             inFrame = false;
-            ctx.drawImage(first, player.position, 0, first.width, canvas.height);
-        }else if(player.position > 0){
-            ctx.drawImage(first, 0, 0, first.width, canvas.height);
+            player.position += 1;
+            
+        }else if(player.position > 0){         
             inFrame = true;
-        }else if(PaymentRequest.position < -2000){
+        }else if(player.position >= 2000){
             inFrame = false;
-            ctx.drawImage(first, -2000, 0, first.width, canvas.height);
+            player.position -= 1;
+            // ctx.drawImage(first, -2000, 0, first.width, canvas.height);
         }
 
   
@@ -490,7 +491,9 @@ function animate() {
 
         ctx.clearRect(0,0, canvas.width, canvas.height);
 
-        stayInFrame();
+        // stayInFrame();
+        ctx.drawImage(first, 0, 0, first.width, canvas.height);
+        ctx.drawImage(first, player.position, 0, first.width, canvas.height);
         drawCaptain(
             captain, 
             player.w * player.frameX, 
