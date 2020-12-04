@@ -49,7 +49,7 @@ function makeHimJump() {
 ```
 
 ##### Scrolling background
-Run throught he streets of New York as a simple lad who wants nothing but to kill some rats
+Run through the streets of New York as a simple lad who wants nothing but to kill some rats
 
 ![alt-text](https://github.com/johnrobertmcc/Cappy-s-Grand-Adventure/blob/master/src/styles/images/meta-tag2.gif 'index')
 
