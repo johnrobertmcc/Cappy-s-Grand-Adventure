@@ -5,6 +5,7 @@ Cappy's Grand Adventure is a side-scroller game writtten in vanilla javascript a
 <hr></hr>
 
 **Javascript**
+
 This game was written soloely with vanilla Javascript, without the addition of any libraries
 
 ## Features
@@ -13,7 +14,7 @@ This game was written soloely with vanilla Javascript, without the addition of a
 
 The core of any game, original design with sprites made in PiskellApp and backgrounds made in Inkscape
 
-![alt-text](https://github.com/johnrobertmcc/Cappy-s-Grand-Adventure/blob/master/src/styles/images/meta-tag2.gif "demo")
+![alt-text](https://github.com/johnrobertmcc/Cappy-s-Grand-Adventure/blob/master/src/styles/images/met-tag3.gif "demo")
 
 
 ##### Dynamic motion
@@ -48,10 +49,8 @@ function makeHimJump() {
 ```
 
 ##### Scrolling background
-Run throught he streets of New York as a simple lad who wants nothing else but a steak dinner
+Run throught he streets of New York as a simple lad who wants nothing but to kill some rats
 
-![alt-text](https://github.com/johnrobertmcc/Cappy-s-Grand-Adventure/blob/master/src/styles/images/meta-tag.gif 'index')
+![alt-text](https://github.com/johnrobertmcc/Cappy-s-Grand-Adventure/blob/master/src/styles/images/meta-tag2.gif 'index')
 
 
-## Planned updates
-More levels, more characters, smoother animation
