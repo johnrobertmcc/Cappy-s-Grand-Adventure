@@ -8,7 +8,7 @@ const audio = document.querySelector("audio");
 canvas.height = 700;
 canvas.width = 1000;
 let gameBegun = false;
-let difficulty = 70;
+let difficulty = getRandomInt(50,70);
 
 //backgrounds.js
 const first = new Image();
@@ -493,6 +493,7 @@ function animate() {
 
         // stayInFrame();
         ctx.drawImage(first, 0, 0, first.width, canvas.height);
+        ctx.drawImage(first, 200, 0, first.width, canvas.height);
         ctx.drawImage(first, player.position, 0, first.width, canvas.height);
         drawCaptain(
             captain, 
