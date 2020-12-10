@@ -4,12 +4,8 @@
 }
 
 .overarch{
-    position: absolute;
-    width: 90vw;
-    height: 700px;
     display: flex;
     justify-content: center;
-    display: flex;
     
 }
 
