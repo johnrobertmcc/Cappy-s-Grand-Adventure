@@ -124,6 +124,7 @@ function moveThisLad(){
     }
     if(player.y !== 575)
         player.jumping = true;
+        player.moving = true;
     }
 
     //for sitting
@@ -392,9 +393,9 @@ function moveThatMouse(){
         let mouseSpeed;
 
         if((player.moving || player.jumping) && !player.faceLeft && inFrame){
-            mouseSpeed = (mice[i].speed + player.speed) * 2
+            mouseSpeed = (mice[i].speed + player.speed)
         }else if((player.moving || player.jumping) && player.faceLeft){
-            mouseSpeed = (mice[i].speed - player.speed) * 2
+            mouseSpeed = (mice[i].speed - player.speed)
         }else{
             mouseSpeed = mice[i].speed
         }
