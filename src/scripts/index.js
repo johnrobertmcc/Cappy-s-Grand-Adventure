@@ -112,6 +112,7 @@ function moveThisLad(){
         player.yVel -= 60
         player.h = 130
         player.jumping = true;
+        player.moving = true;
     }
     if(keys[38] && !player.jumping && player.faceLeft){
         player.h = 138
@@ -119,11 +120,9 @@ function moveThisLad(){
         player.frameY = 9;
         player.yVel -= 60
         player.jumping = true;
+        player.moving = true;
     }
-
-    
-    if(player.y !== 575){
-        player.moving = false;
+    if(player.y !== 575)
         player.jumping = true;
     }
 
@@ -238,11 +237,11 @@ function makeHimWalk(){
 function makeHimJump() {
     if(player.frameX < 3 && player.frameY === 4){
         player.frameX ++}
-    // }else if(player.jumping === true && player.y > 600) {
-    //     player.frameX ++;
-    // }else if(player.moving === false && player.y <= 601){
-    //     player.jumping === false
-    // }
+    }else if(player.jumping === true && player.y > 600) {
+        player.frameX ++;
+    }else if(player.moving === false && player.y <= 601){
+        player.jumping === false
+    }
 }
 
 function letHimRest() {
@@ -393,9 +392,9 @@ function moveThatMouse(){
         let mouseSpeed;
 
         if((player.moving || player.jumping) && !player.faceLeft && inFrame){
-            mouseSpeed = (mice[i].speed + player.speed) * 1.3
+            mouseSpeed = (mice[i].speed + player.speed) * 2
         }else if((player.moving || player.jumping) && player.faceLeft){
-            mouseSpeed = (mice[i].speed - player.speed) * 0.7
+            mouseSpeed = (mice[i].speed - player.speed) * 2
         }else{
             mouseSpeed = mice[i].speed
         }
