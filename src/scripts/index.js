@@ -122,7 +122,7 @@ function moveThisLad(){
         player.jumping = true;
         player.moving = true;
     }
-    if(player.y !== 575)
+    if(player.y !== 575){
         player.jumping = true;
         player.moving = true;
     }
@@ -237,7 +237,7 @@ function makeHimWalk(){
 
 function makeHimJump() {
     if(player.frameX < 3 && player.frameY === 4){
-        player.frameX ++}
+        player.frameX ++
     }else if(player.jumping === true && player.y > 600) {
         player.frameX ++;
     }else if(player.moving === false && player.y <= 601){
